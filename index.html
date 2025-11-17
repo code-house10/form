@@ -1595,7 +1595,7 @@
 
 
     <!-- Quote Request Form Modal -->
-    <div id="form-modal" class="fixed inset-0 z-[99] flex items-center justify-center p-4 hidden">
+    <div id="form-modal" class="fixed inset-0 z-[99] flex items-start md:items-center justify-center p-4 pt-12 md:pt-4 overflow-y-auto hidden">
         <!-- Backdrop -->
         <div id="form-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         
@@ -1676,14 +1676,14 @@
                         />
                     </div>
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div class="flex items-center gap-2 rounded-xl border border-slate-200 p-3">
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
                             <label for="elevator_from" class="text-brand-muted">مصعد (الحالي)؟</label>
                             <input type="radio" id="elevator_from_yes" name="elevator_from" value="نعم">
                             <label for="elevator_from_yes">نعم</label>
                             <input type="radio" id="elevator_from_no" name="elevator_from" value="لا" class="mr-2">
                             <label for="elevator_from_no">لا</label>
                         </div>
-                        <div class="flex items-center gap-2 rounded-xl border border-slate-200 p-3">
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
                             <label for="elevator_to" class="text-brand-muted">مصعد (الجديد)؟</label>
                             <input type="radio" id="elevator_to_yes" name="elevator_to" value="نعم">
                             <label for="elevator_to_yes">نعم</label>

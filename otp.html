@@ -1604,7 +1604,7 @@
             <div class="p-4 md:p-6">
                 <!-- Form -->
                 <form id="quote-form" class="space-y-4 text-sm">
-                    <div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                          <input
                             type="text"
                             id="form-name"
@@ -1612,9 +1612,52 @@
                             required
                             class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
                         />
+                         <!-- --- تعديل --- -->
+                         <!-- حقل الهاتف وزر إرسال الكود -->
+                        <div class="flex items-center gap-2">
+                            <input
+                                type="tel"
+                                id="form-phone"
+                                placeholder="رقم الهاتف (واتساب) *"
+                                required
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                            <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
+                                إرسال الكود
+                            </button>
+                        </div>
+                         <!-- --- نهاية التعديل --- -->
                     </div>
 
-                    <!-- --- الحقول المستعادة --- -->
+                    <!-- --- إضافة --- -->
+                    <!-- حقل كود التحقق (مخفي مبدئيًا) -->
+                    <div id="verification-container" class="hidden space-y-2">
+                        <p class="text-xs text-brand-muted">تم إرسال كود التحقق إلى رقم الواتساب الخاص بك.</p>
+                        <div class="flex items-center gap-2">
+                            <input
+                                type="text"
+                                id="verification-code"
+                                placeholder="أدخل كود التحقق"
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                            <button type="button" id="verify-code-btn" class="flex-shrink-0 px-4 py-3 rounded-xl bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600">
+                                تأكيد
+                            </button>
+                        </div>
+                         <div id="verification-status" class="text-xs"></div>
+                    </div>
+                    <!-- --- نهاية الإضافة --- -->
+
+                    <!-- --- إضافة: رابط الاتصال بعد التحقق --- -->
+                    <div id="verified-call-prompt" class="hidden pt-2 text-center">
+                        <p class="text-xs text-brand-muted mb-2">تم تأكيد رقمك! يمكنك الآن إرسال الطلب، أو</p>
+                        <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
+                            <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
+                            <span>الاتصال المباشر: 01068224441</span>
+                        </a>
+                    </div>
+                    <!-- --- نهاية الإضافة --- -->
+
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input
                             type="text"
@@ -1682,62 +1725,11 @@
                         placeholder="أي تفاصيل إضافية؟ (مثل: ونش، فك وتركيب، تغليف...)"
                         class="w-full p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text min-h-[80px]"
                     ></textarea>
-                    <!-- --- نهاية الحقول المستعادة --- -->
-
 
                     <!-- --- إضافة --- -->
                     <!-- منطقة رسائل الخطأ أو النجاح -->
                     <div id="form-message" class="text-xs text-center p-2 hidden"></div>
                     <!-- --- نهاية الإضافة --- -->
-
-                    <!-- --- تم نقل هذا الحقل إلى هنا --- -->
-                    <!-- --- تعديل --- -->
-                    <!-- حقل الهاتف وزر إرسال الكود -->
-                    <div class="flex items-center gap-2">
-                        <input
-                            type="tel"
-                            id="form-phone"
-                            placeholder="رقم الهاتف (واتساب) *"
-                            required
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
-                        <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
-                            إرسال الكود
-                        </button>
-                    </div>
-                    <!-- --- نهاية التعديل --- -->
-                    <!-- --- نهاية النقل --- -->
-
-
-                    <!-- --- إضافة --- -->
-                    <!-- حقل كود التحقق (مخفي مبدئيًا) -->
-                    <div id="verification-container" class="hidden space-y-2">
-                        <p class="text-xs text-brand-muted">تم إرسال كود التحقق إلى رقم الواتساب الخاص بك.</p>
-                        <div class="flex items-center gap-2">
-                            <input
-                                type="text"
-                                id="verification-code"
-                                placeholder="أدخل كود التحقق"
-                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                            />
-                            <button type="button" id="verify-code-btn" class="flex-shrink-0 px-4 py-3 rounded-xl bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600">
-                                تأكيد
-                            </button>
-                        </div>
-                         <div id="verification-status" class="text-xs"></div>
-                    </div>
-                    <!-- --- نهاية الإضافة --- -->
-                    
-                    <!-- --- إضافة: رابط الاتصال بعد التحقق --- -->
-                    <div id="verified-call-prompt" class="hidden pt-2 text-center">
-                        <p class="text-xs text-brand-muted mb-2">تم تأكيد رقمك! يمكنك الآن إرسال الطلب، أو</p>
-                        <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
-                            <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
-                            <span>الاتصال المباشر: 01068224441</span>
-                        </a>
-                    </div>
-                    <!-- --- نهاية الإضافة --- -->
-
 
                     <!-- --- تعديل --- -->
                     <!-- تم إضافة id و disabled -->
@@ -1758,16 +1750,9 @@
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <h3 class="text-xl font-bold text-brand-text mb-2">تم استلام طلبك</h3>
-                    <p class="text-brand-muted text-sm leading-relaxed mb-4"> <!-- Added margin-bottom -->
+                    <p class="text-brand-muted text-sm leading-relaxed">
                         شكرًا لك. سيقوم أحد ممثلينا بالتواصل معك قريبًا جدًا لتأكيد التفاصيل.
                     </p>
-                    
-                    <!-- === USER REQUEST 2: ADDED CALL LINK HERE === -->
-                    <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
-                        <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
-                        <span>الاتصال المباشر: 01068224441</span>
-                    </a>
-                    <!-- === END OF ADDITION === -->
                 </div>
             </div>
         </div>
@@ -1904,7 +1889,7 @@
             // --- GCLID CAPTURE & CONVERSION SCRIPT ---
 
             let userGclid = null;
-            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; // تم وضع الرابط
+            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyErRAxTGIzQQqp7w00eS3cHBUmaRfCG-o34JYiTjQM9s00mB-ilZ1rLcIV3n6rUlwYOg/exec'; // تم وضع الرابط
 
             // 1. Function to parse GCLID from URL on page load
             function getGclid() {
@@ -2282,4 +2267,6 @@
     </script>
 </body>
 </html>
+
+
 

@@ -1886,67 +1886,6 @@
                 console.error("Swiper initialization failed: ", e);
             }
 
-            // --- GCLID CAPTURE & CONVERSION SCRIPT ---
-
-            let userGclid = null;
-            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; // تم وضع الرابط
-
-            // 1. Function to parse GCLID from URL on page load
-            function getGclid() {
-                try {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const gclid = urlParams.get('gclid');
-                    if (gclid) {
-                        console.log('GCLID Found:', gclid);
-                        return gclid;
-                    }
-                } catch (e) {
-                    console.error('Error parsing GCLID:', e);
-                }
-                return null;
-            }
-            // Store GCLID in a global variable
-            userGclid = getGclid();
-
-            // 2. Helper function to send conversion data to Google Sheet
-           async function sendConversionToSheet(conversionData) {
-    if (GOOGLE_APP_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
-        console.warn('Google App Script URL is not set. Cannot send conversion.');
-        return false; // فشل لو مفيش لينك
-    }
-
-    // نضيف الـ GCLID والتوقيت لكل Conversion
-    conversionData.gclid = userGclid;
-    conversionData.timestamp = new Date().toISOString();
-
-    try {
-        await fetch(GOOGLE_APP_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',        // 👈 مهم جداً علشان نتجنب Failed to fetch
-            cache: 'no-cache',
-            body: JSON.stringify(conversionData)
-        });
-
-        console.log('Conversion data sent (no-cors):', conversionData.conversionType);
-        return true; // نجاح
-
-    } catch (error) {
-        console.error('Error sending conversion data to Google Sheet:', error);
-        return false; // فشل حقيقي فى الاتصال
-    }
-}
-
-                    // --- END MODIFICATION ---
-
-                } catch (error) {
-                    console.error('Error sending conversion data to Google Sheet:', error);
-                    return false; // Signal failure
-                }
-            }
-
-            // --- END GCLID SCRIPT ---
-
-
             // Call Confirmation Modal Logic
             const callModal = document.getElementById('call-modal');
             const modalBackdrop = document.getElementById('modal-backdrop');
@@ -1988,15 +1927,6 @@
             callTriggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
-                    // --- GCLID Conversion (Trigger 2a: Modal Call) ---
-                    const conversionData = {
-                        conversionType: 'Call Click (Modal)',
-                        phone: '01068224441' // Phone number from this link
-                    };
-                    sendConversionToSheet(conversionData);
-                    // --- End GCLID ---
-
                     openCallModal();
                 });
             });
@@ -2013,22 +1943,6 @@
             const formTriggers = document.querySelectorAll('.js-open-form'); // Changed class to avoid conflict
             const quoteForm = document.getElementById('quote-form');
             const formSuccessMessage = document.getElementById('form-success-message');
-
-            // --- GCLID Conversion (Trigger 2b: Verified Call Link) ---
-            // We need to add the listener here, as the element exists in the DOM
-            const verifiedCallLink = document.querySelector('#verified-call-prompt a');
-            if (verifiedCallLink) {
-                verifiedCallLink.addEventListener('click', () => {
-                    // This click is a high-intent conversion
-                    const conversionData = {
-                        conversionType: 'Call Click (Verified)',
-                        phone: '01068224441' // Phone number from this link
-                    };
-                    sendConversionToSheet(conversionData);
-                    // No e.preventDefault() needed, let the 'tel:' link work
-                });
-            }
-            // --- End GCLID ---
 
             const openFormModal = () => {
                 if (formModal && quoteForm && formSuccessMessage) {
@@ -2084,8 +1998,8 @@
             const ULTRAMSG_TOKEN = 'dawjp3uvgtursbx1';
             const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
             
-            // --- (Google URL is now defined above) ---
-            // const GOOGLE_APP_SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE'; 
+            // --- هام جداً: استبدل هذا الرابط بالرابط الذي ستحصل عليه من Google Apps Script ---
+            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; 
 
             let isPhoneVerified = false;
             let generatedCode = null;
@@ -2212,11 +2126,6 @@
 
                     // 1. Collect form data
                     const formData = {
-                        // --- GCLID Conversion (Trigger 1: Form Submit) ---
-                        conversionType: 'Form Submit',
-                        // gclid: userGclid, // GCLID is added by sendConversionToSheet
-                        // --- End GCLID ---
-
                         name: document.getElementById('form-name').value,
                         phone: document.getElementById('form-phone').value,
                         from: document.getElementById('form-from').value,
@@ -2230,23 +2139,33 @@
                         details: document.getElementById('form-details').value
                     };
 
-                    // 2. Send data to Google Sheet (using the new helper function)
+                    // 2. Send data to Google Sheet
                     try {
-                        // --- MODIFICATION: Check the return value ---
-                        const success = await sendConversionToSheet(formData);
+                        // We use a trick to send data to Apps Script without CORS issues
+                        // We create a temporary form and submit it
+                        // A more robust way is to enable CORS in Apps Script and use fetch POST
+                        // But for simplicity, we'll use a standard fetch POST and expect 'no-cors'
                         
-                        if (success) {
-                            // 3. Show original success message ONLY if success is true
-                            showFormSuccess();
-                        } else {
-                            // Failed to send
-                            throw new Error('Server-side error. Data was not saved.');
-                        }
-                        // --- END MODIFICATION ---
+                        const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors', // Important for basic Apps Script Web App
+                            cache: 'no-cache',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(formData) // Send data as JSON
+                        });
+                        
+                        // Since mode is 'no-cors', we can't read the response.
+                        // We assume success if no network error was thrown.
+                        console.log('Form data sent to Google Sheet (assumed success).');
+                        
+                        // 3. Show original success message
+                        showFormSuccess();
 
                     } catch (error) {
                         console.error('Error sending data to Google Sheet:', error);
-                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى. (Server Error)';
+                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.';
                         formMessage.classList.add('text-red-500');
                         formMessage.classList.remove('hidden');
                         submitBtn.innerHTML = originalBtnText; // Restore button
@@ -2259,7 +2178,3 @@
     </script>
 </body>
 </html>
-
-
-
-

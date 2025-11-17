@@ -1909,41 +1909,33 @@
             userGclid = getGclid();
 
             // 2. Helper function to send conversion data to Google Sheet
-            async function sendConversionToSheet(conversionData) {
-                if (GOOGLE_APP_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
-                    console.warn('Google App Script URL is not set. Cannot send conversion.');
-                    return false; // Signal failure
-                }
-                
-                // Add GCLID to all conversion data
-                conversionData.gclid = userGclid;
-                conversionData.timestamp = new Date().toISOString();
+           async function sendConversionToSheet(conversionData) {
+    if (GOOGLE_APP_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
+        console.warn('Google App Script URL is not set. Cannot send conversion.');
+        return false; // فشل لو مفيش لينك
+    }
 
-                try {
-                    // --- MODIFICATION: Changed mode to 'cors' and added response handling ---
-                    const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'cors', // Use 'cors' (default) instead of 'no-cors'
-                        cache: 'no-cache',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(conversionData)
-                    });
-                    
-                    // We can now read the response!
-                    if (!response.ok) {
-                         // Throw error if response is not 2xx
-                         throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+    // نضيف الـ GCLID والتوقيت لكل Conversion
+    conversionData.gclid = userGclid;
+    conversionData.timestamp = new Date().toISOString();
 
-                    const result = await response.json(); 
-                    
-                    if (result.status === 'success') {
-                        console.log('Conversion data sent:', conversionData.conversionType);
-                        return true; // Signal success
-                    } else {
-                        console.error('Error from Google Sheet:', result.message);
-                        return false; // Signal failure
-                    }
+    try {
+        await fetch(GOOGLE_APP_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',        // 👈 مهم جداً علشان نتجنب Failed to fetch
+            cache: 'no-cache',
+            body: JSON.stringify(conversionData)
+        });
+
+        console.log('Conversion data sent (no-cors):', conversionData.conversionType);
+        return true; // نجاح
+
+    } catch (error) {
+        console.error('Error sending conversion data to Google Sheet:', error);
+        return false; // فشل حقيقي فى الاتصال
+    }
+}
+
                     // --- END MODIFICATION ---
 
                 } catch (error) {
@@ -2267,6 +2259,7 @@
     </script>
 </body>
 </html>
+
 
 
 

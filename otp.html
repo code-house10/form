@@ -1889,7 +1889,7 @@
             // --- GCLID CAPTURE & CONVERSION SCRIPT ---
 
             let userGclid = null;
-            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBBDYmTjWacVVJ6NiFKqQxdwCo7lDOZIwSQL7VjW8NJjICvwesTbOkwvASvy6-8nGZ2A/exec'; // لا تنسى استبدال هذا
+            const GOOGLE_APP_SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE'; // لا تنسى استبدال هذا
 
             // 1. Function to parse GCLID from URL on page load
             function getGclid() {
@@ -1910,9 +1910,9 @@
 
             // 2. Helper function to send conversion data to Google Sheet
             async function sendConversionToSheet(conversionData) {
-                if (GOOGLE_APP_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzBBDYmTjWacVVJ6NiFKqQxdwCo7lDOZIwSQL7VjW8NJjICvwesTbOkwvASvy6-8nGZ2A/exec') {
+                if (GOOGLE_APP_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
                     console.warn('Google App Script URL is not set. Cannot send conversion.');
-                    return;
+                    return false; // Signal failure
                 }
                 
                 // Add GCLID to all conversion data
@@ -1920,16 +1920,35 @@
                 conversionData.timestamp = new Date().toISOString();
 
                 try {
-                    await fetch(GOOGLE_APP_SCRIPT_URL, {
+                    // --- MODIFICATION: Changed mode to 'cors' and added response handling ---
+                    const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
                         method: 'POST',
-                        mode: 'no-cors',
+                        mode: 'cors', // Use 'cors' (default) instead of 'no-cors'
                         cache: 'no-cache',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(conversionData)
                     });
-                    console.log('Conversion data sent:', conversionData.conversionType);
+                    
+                    // We can now read the response!
+                    if (!response.ok) {
+                         // Throw error if response is not 2xx
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json(); 
+                    
+                    if (result.status === 'success') {
+                        console.log('Conversion data sent:', conversionData.conversionType);
+                        return true; // Signal success
+                    } else {
+                        console.error('Error from Google Sheet:', result.message);
+                        return false; // Signal failure
+                    }
+                    // --- END MODIFICATION ---
+
                 } catch (error) {
                     console.error('Error sending conversion data to Google Sheet:', error);
+                    return false; // Signal failure
                 }
             }
 
@@ -2074,7 +2093,7 @@
             const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
             
             // --- (Google URL is now defined above) ---
-            // const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBBDYmTjWacVVJ6NiFKqQxdwCo7lDOZIwSQL7VjW8NJjICvwesTbOkwvASvy6-8nGZ2A/exec'; 
+            // const GOOGLE_APP_SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE'; 
 
             let isPhoneVerified = false;
             let generatedCode = null;
@@ -2221,14 +2240,21 @@
 
                     // 2. Send data to Google Sheet (using the new helper function)
                     try {
-                        await sendConversionToSheet(formData);
+                        // --- MODIFICATION: Check the return value ---
+                        const success = await sendConversionToSheet(formData);
                         
-                        // 3. Show original success message
-                        showFormSuccess();
+                        if (success) {
+                            // 3. Show original success message ONLY if success is true
+                            showFormSuccess();
+                        } else {
+                            // Failed to send
+                            throw new Error('Server-side error. Data was not saved.');
+                        }
+                        // --- END MODIFICATION ---
 
                     } catch (error) {
                         console.error('Error sending data to Google Sheet:', error);
-                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.';
+                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى. (Server Error)';
                         formMessage.classList.add('text-red-500');
                         formMessage.classList.remove('hidden');
                         submitBtn.innerHTML = originalBtnText; // Restore button

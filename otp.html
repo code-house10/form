@@ -1604,7 +1604,7 @@
             <div class="p-4 md:p-6">
                 <!-- Form -->
                 <form id="quote-form" class="space-y-4 text-sm">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
                          <input
                             type="text"
                             id="form-name"
@@ -1612,21 +1612,6 @@
                             required
                             class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
                         />
-                         <!-- --- تعديل --- -->
-                         <!-- حقل الهاتف وزر إرسال الكود -->
-                        <div class="flex items-center gap-2">
-                            <input
-                                type="tel"
-                                id="form-phone"
-                                placeholder="رقم الهاتف (واتساب) *"
-                                required
-                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                            />
-                            <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
-                                إرسال الكود
-                            </button>
-                        </div>
-                         <!-- --- نهاية التعديل --- -->
                     </div>
 
                     <!-- --- إضافة --- -->
@@ -1731,6 +1716,25 @@
                     <div id="form-message" class="text-xs text-center p-2 hidden"></div>
                     <!-- --- نهاية الإضافة --- -->
 
+                    <!-- --- تم نقل هذا الحقل إلى هنا --- -->
+                    <!-- --- تعديل --- -->
+                    <!-- حقل الهاتف وزر إرسال الكود -->
+                    <div class="flex items-center gap-2">
+                        <input
+                            type="tel"
+                            id="form-phone"
+                            placeholder="رقم الهاتف (واتساب) *"
+                            required
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                        <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
+                            إرسال الكود
+                        </button>
+                    </div>
+                    <!-- --- نهاية التعديل --- -->
+                    <!-- --- نهاية النقل --- -->
+
+
                     <!-- --- تعديل --- -->
                     <!-- تم إضافة id و disabled -->
                     <button
@@ -1750,9 +1754,16 @@
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <h3 class="text-xl font-bold text-brand-text mb-2">تم استلام طلبك</h3>
-                    <p class="text-brand-muted text-sm leading-relaxed">
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4"> <!-- Added margin-bottom -->
                         شكرًا لك. سيقوم أحد ممثلينا بالتواصل معك قريبًا جدًا لتأكيد التفاصيل.
                     </p>
+                    
+                    <!-- === USER REQUEST 2: ADDED CALL LINK HERE === -->
+                    <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
+                        <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
+                        <span>الاتصال المباشر: 01068224441</span>
+                    </a>
+                    <!-- === END OF ADDITION === -->
                 </div>
             </div>
         </div>
@@ -1886,6 +1897,75 @@
                 console.error("Swiper initialization failed: ", e);
             }
 
+            // --- GCLID CAPTURE & CONVERSION SCRIPT ---
+
+            let userGclid = null;
+            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyErRAxTGIzQQqp7w00eS3cHBUmaRfCG-o34JYiTjQM9s00mB-ilZ1rLcIV3n6rUlwYOg/exec'; // تم وضع الرابط
+
+            // 1. Function to parse GCLID from URL on page load
+            function getGclid() {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const gclid = urlParams.get('gclid');
+                    if (gclid) {
+                        console.log('GCLID Found:', gclid);
+                        return gclid;
+                    }
+                } catch (e) {
+                    console.error('Error parsing GCLID:', e);
+                }
+                return null;
+            }
+            // Store GCLID in a global variable
+            userGclid = getGclid();
+
+            // 2. Helper function to send conversion data to Google Sheet
+            async function sendConversionToSheet(conversionData) {
+                if (GOOGLE_APP_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
+                    console.warn('Google App Script URL is not set. Cannot send conversion.');
+                    return false; // Signal failure
+                }
+                
+                // Add GCLID to all conversion data
+                conversionData.gclid = userGclid;
+                conversionData.timestamp = new Date().toISOString();
+
+                try {
+                    // --- MODIFICATION: Changed mode to 'cors' and added response handling ---
+                    const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'cors', // Use 'cors' (default) instead of 'no-cors'
+                        cache: 'no-cache',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(conversionData)
+                    });
+                    
+                    // We can now read the response!
+                    if (!response.ok) {
+                         // Throw error if response is not 2xx
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json(); 
+                    
+                    if (result.status === 'success') {
+                        console.log('Conversion data sent:', conversionData.conversionType);
+                        return true; // Signal success
+                    } else {
+                        console.error('Error from Google Sheet:', result.message);
+                        return false; // Signal failure
+                    }
+                    // --- END MODIFICATION ---
+
+                } catch (error) {
+                    console.error('Error sending conversion data to Google Sheet:', error);
+                    return false; // Signal failure
+                }
+            }
+
+            // --- END GCLID SCRIPT ---
+
+
             // Call Confirmation Modal Logic
             const callModal = document.getElementById('call-modal');
             const modalBackdrop = document.getElementById('modal-backdrop');
@@ -1927,6 +2007,15 @@
             callTriggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
                     e.preventDefault();
+                    
+                    // --- GCLID Conversion (Trigger 2a: Modal Call) ---
+                    const conversionData = {
+                        conversionType: 'Call Click (Modal)',
+                        phone: '01068224441' // Phone number from this link
+                    };
+                    sendConversionToSheet(conversionData);
+                    // --- End GCLID ---
+
                     openCallModal();
                 });
             });
@@ -1943,6 +2032,22 @@
             const formTriggers = document.querySelectorAll('.js-open-form'); // Changed class to avoid conflict
             const quoteForm = document.getElementById('quote-form');
             const formSuccessMessage = document.getElementById('form-success-message');
+
+            // --- GCLID Conversion (Trigger 2b: Verified Call Link) ---
+            // We need to add the listener here, as the element exists in the DOM
+            const verifiedCallLink = document.querySelector('#verified-call-prompt a');
+            if (verifiedCallLink) {
+                verifiedCallLink.addEventListener('click', () => {
+                    // This click is a high-intent conversion
+                    const conversionData = {
+                        conversionType: 'Call Click (Verified)',
+                        phone: '01068224441' // Phone number from this link
+                    };
+                    sendConversionToSheet(conversionData);
+                    // No e.preventDefault() needed, let the 'tel:' link work
+                });
+            }
+            // --- End GCLID ---
 
             const openFormModal = () => {
                 if (formModal && quoteForm && formSuccessMessage) {
@@ -1998,8 +2103,8 @@
             const ULTRAMSG_TOKEN = 'dawjp3uvgtursbx1';
             const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
             
-            // --- هام جداً: استبدل هذا الرابط بالرابط الذي ستحصل عليه من Google Apps Script ---
-            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; 
+            // --- (Google URL is now defined above) ---
+            // const GOOGLE_APP_SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE'; 
 
             let isPhoneVerified = false;
             let generatedCode = null;
@@ -2126,6 +2231,11 @@
 
                     // 1. Collect form data
                     const formData = {
+                        // --- GCLID Conversion (Trigger 1: Form Submit) ---
+                        conversionType: 'Form Submit',
+                        // gclid: userGclid, // GCLID is added by sendConversionToSheet
+                        // --- End GCLID ---
+
                         name: document.getElementById('form-name').value,
                         phone: document.getElementById('form-phone').value,
                         from: document.getElementById('form-from').value,
@@ -2139,33 +2249,23 @@
                         details: document.getElementById('form-details').value
                     };
 
-                    // 2. Send data to Google Sheet
+                    // 2. Send data to Google Sheet (using the new helper function)
                     try {
-                        // We use a trick to send data to Apps Script without CORS issues
-                        // We create a temporary form and submit it
-                        // A more robust way is to enable CORS in Apps Script and use fetch POST
-                        // But for simplicity, we'll use a standard fetch POST and expect 'no-cors'
+                        // --- MODIFICATION: Check the return value ---
+                        const success = await sendConversionToSheet(formData);
                         
-                        const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
-                            method: 'POST',
-                            mode: 'no-cors', // Important for basic Apps Script Web App
-                            cache: 'no-cache',
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(formData) // Send data as JSON
-                        });
-                        
-                        // Since mode is 'no-cors', we can't read the response.
-                        // We assume success if no network error was thrown.
-                        console.log('Form data sent to Google Sheet (assumed success).');
-                        
-                        // 3. Show original success message
-                        showFormSuccess();
+                        if (success) {
+                            // 3. Show original success message ONLY if success is true
+                            showFormSuccess();
+                        } else {
+                            // Failed to send
+                            throw new Error('Server-side error. Data was not saved.');
+                        }
+                        // --- END MODIFICATION ---
 
                     } catch (error) {
                         console.error('Error sending data to Google Sheet:', error);
-                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.';
+                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى. (Server Error)';
                         formMessage.classList.add('text-red-500');
                         formMessage.classList.remove('hidden');
                         submitBtn.innerHTML = originalBtnText; // Restore button

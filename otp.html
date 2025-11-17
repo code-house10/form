@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>شركة الحكمة لنقل العفش | ثيم جديد بواجهة عصرية</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Swiper -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#06B6D4', // Cyan
+                            secondary: '#6366F1', // Indigo
+                            dark: '#020617',
+                            text: '#0F172A',
+                            muted: '#6B7280',
+                            soft: '#E5F6FB',
+                        },
+                        layout: {
+                            bg: '#F3F4F6',
+                            surface: '#FFFFFF',
+                            subtle: '#F9FAFB',
+                        },
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        soft: '0 18px 45px -28px rgba(15, 23, 42, 0.35)',
+                        card: '0 18px 40px -30px rgba(15, 23, 42, 0.4)',
+                    },
+                    borderRadius: {
+                        xl2: '1.25rem',
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: "Cairo", sans-serif;
+            background-color: #f3f4f6;
+            color: #0f172a;
+        }
+
+        .btn-primary {
+            transition: all 0.25s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 45px -26px rgba(56, 189, 248, 0.8);
+        }
+
+        .btn-ghost {
+            transition: all 0.2s ease;
+        }
+        .btn-ghost:hover {
+            background-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .card {
+            transition: all 0.25s ease;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.8);
+            border-color: rgba(56, 189, 248, 0.7);
+        }
+
+        .icon-pill {
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 30% 20%, #a5f3fc, #1d4ed8);
+            color: #ecfeff;
+            box-shadow: 0 14px 35px -18px rgba(37, 99, 235, 0.9);
+        }
+
+        .section-shell {
+            max-width: 1120px;
+            margin-inline: auto;
+            padding-inline: 1.25rem;
+        }
+
+        .shell-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2.3rem 1.8rem;
+            box-shadow: 0 18px 45px -28px rgba(15, 23, 42, 0.35);
+        }
+
+        @media (min-width: 768px) {
+            .shell-card {
+                padding: 2.8rem 3rem;
+            }
+        }
+
+        /* HERO DECOR */
+        .hero-gradient {
+            background-image: radial-gradient(circle at top right, #a855f7 0, transparent 55%),
+                radial-gradient(circle at top left, #22d3ee 0, transparent 50%),
+                radial-gradient(circle at bottom, #0f172a 0, #020617 65%);
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(42px);
+            opacity: 0.75;
+            mix-blend-mode: screen;
+        }
+
+        .hero-blob-1 {
+            width: 240px;
+            height: 240px;
+            background: #38bdf8;
+            top: -60px;
+            left: 10%;
+        }
+        .hero-blob-2 {
+            width: 260px;
+            height: 260px;
+            background: #a855f7;
+            bottom: -80px;
+            right: 10%;
+        }
+
+        /* Swiper hero slides */
+        .hero-swiper-container {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            position: relative;
+            min-height: 72vh;
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            mix-blend-mode: lighten;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            padding-block: 4.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content h1,
+        .hero-content p,
+        .hero-content .hero-cta {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+        }
+
+        .swiper-slide-active .hero-content h1 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.15s;
+        }
+        .swiper-slide-active .hero-content p {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.28s;
+        }
+        .swiper-slide-active .hero-content .hero-cta {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .hero-pagination {
+            position: absolute;
+            bottom: 1.8rem;
+            right: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 30;
+        }
+
+        .hero-pagination .swiper-pagination-bullet {
+            width: 9px;
+            height: 9px;
+            background-color: rgba(226, 232, 240, 0.7);
+            opacity: 1;
+            margin-inline: 3px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .hero-pagination .swiper-pagination-bullet-active {
+            background: linear-gradient(to left, #22d3ee, #6366f1);
+            transform: scale(1.3);
+        }
+
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-right: 2.5rem;
+            padding-bottom: 1.9rem;
+            border-right: 1.5px dashed rgba(148, 163, 184, 0.8);
+        }
+        .timeline-item:last-child {
+            padding-bottom: 0;
+            border-right-color: transparent;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: -0.9rem;
+            top: 0.1rem;
+            width: 2.3rem;
+            height: 2.3rem;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 1px solid rgba(203, 213, 225, 0.9);
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 14px 35px -24px rgba(15, 23, 42, 0.7);
+        }
+
+        /* FAQ accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease-out;
+        }
+        .accordion-button[aria-expanded="true"] + .accordion-content {
+            max-height: 360px;
+        }
+        .accordion-button .icon-plus {
+            display: block;
+        }
+        .accordion-button .icon-minus {
+            display: none;
+        }
+        .accordion-button[aria-expanded="true"] .icon-plus {
+            display: none;
+        }
+        .accordion-button[aria-expanded="true"] .icon-minus {
+            display: block;
+        }
+
+        /* Testimonials slider */
+        .slider-container {
+            overflow: hidden;
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.45s ease-in-out;
+        }
+        .slider-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Floating ring animation */
+        @keyframes ring {
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+            20%,
+            60% {
+                transform: rotate(-12deg) scale(1.05);
+            }
+            40%,
+            80% {
+                transform: rotate(8deg) scale(1.05);
+            }
+        }
+        .animate-ring {
+            animation: ring 1.8s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-layout-bg">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200">
+        <nav class="py-3 md:py-4">
+            <div class="section-shell flex items-center justify-between gap-4">
+                <a href="#" class="flex items-center gap-2">
+                    <!-- LOGO IMAGE ADDED -->
+                    <img src="images/logo.jpg" alt="شعار شركة الحكمة" class="w-9 h-9 rounded-2xl object-cover shadow-soft" />
+                    
+                    <div>
+                        <div class="text-sm font-semibold text-slate-600">
+                            شركة الحكمة
+                        </div>
+                        <div class="text-[0.75rem] text-slate-400">
+                            لنقل ورفع الأثاث
+                        </div>
+                    </div>
+                </a>
+
+                <div
+                    class="hidden lg:flex items-center gap-7 text-[0.88rem] font-medium text-slate-600"
+                >
+                    <a href="#" class="text-slate-900 border-b-2 border-brand-primary pb-1">
+                        الرئيسية
+                    </a>
+                    <a href="#about" class="hover:text-brand-primary">من نحن</a>
+                    <a href="#services" class="hover:text-brand-primary">خدماتنا</a>
+                    <a href="#process" class="hover:text-brand-primary">خطوات العمل</a>
+                    <a href="#fleet" class="hover:text-brand-primary">لماذا نحن؟</a>
+                    <a href="#testimonials" class="hover:text-brand-primary">آراء العملاء</a>
+                    <a href="#faq" class="hover:text-brand-primary">الأسئلة الشائعة</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a
+                        href="#"
+                        class="hidden md:inline-flex items-center gap-2 text-xs md:text-sm text-slate-600 hover:text-slate-900 js-confirm-call"
+                    >
+                        <span
+                            class="w-8 h-8 rounded-full bg-brand-soft flex items-center justify-center text-brand-secondary"
+                        >
+                            <i class="fa-solid fa-phone -scale-x-100 text-[0.85rem]"></i>
+                        </span>
+                        <span class="font-semibold tracking-wide">
+                            01068224441
+                        </span>
+                    </a>
+                    <a
+                        href="#"
+                        class="hidden md:inline-flex btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary text-white text-xs font-semibold px-4 py-2 rounded-full shadow-soft js-open-form"
+                    >
+                        اطلب عرض سعر
+                    </a>
+                    <button
+                        id="mobile-menu-button"
+                        class="lg:hidden w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+        <!-- Mobile menu -->
+            <div id="mobile-menu" class="section-shell hidden pt-3 pb-4">
+                <div
+                    class="bg-white rounded-2xl shadow-soft border border-slate-200 overflow-hidden text-sm"
+                >
+                    <a
+                        href="#"
+                        class="block px-4 py-3 border-b border-slate-100 text-slate-900"
+                    >
+                        الرئيسية
+                    </a>
+                    <a href="#about" class="block px-4 py-3 border-b border-slate-100">
+                        من نحن
+                    </a>
+                    <a href="#services" class="block px-4 py-3 border-b border-slate-100">
+                        خدماتنا
+                    </a>
+                    <a href="#process" class="block px-4 py-3 border-b border-slate-100">
+                        خطوات العمل
+                    </a>
+                    <a href="#fleet" class="block px-4 py-3 border-b border-slate-100">
+                        لماذا نحن؟
+                    </a>
+                    <a href="#testimonials" class="block px-4 py-3 border-b border-slate-100">
+                        آراء العملاء
+                    </a>
+                    <a href="#faq" class="block px-4 py-3 border-b border-slate-100">
+                        الأسئلة الشائعة
+                    </a>
+                    <a
+                        href="#"
+                        class="block px-4 py-3 font-semibold text-brand-secondary js-confirm-call"
+                    >
+                        اتصل بنا
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pb-14">
+
+        <!-- HERO -->
+        <section class="hero-gradient text-white relative overflow-hidden">
+            <div class="hero-blob hero-blob-1"></div>
+            <div class="hero-blob hero-blob-2"></div>
+
+            <div class="swiper hero-swiper-container">
+                <div class="swiper-wrapper">
+
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide hero-slide relative">
+                        <img
+                            src="images/عمالة-مدربة-باحترافية.png"
+                            alt="نقل عفش باحترافية"
+                            class="hero-bg-img"
+                            onerror="this.src='https://placehold.co/1200x800/0f172a/e0f2fe?text=Hekma+Moving'"
+                        />
+                        <div class="hero-overlay">
+                            <div class="section-shell hero-content">
+                                <div class="grid md:grid-cols-[1.4fr,1fr] gap-10 items-center">
+                                    <div class="space-y-5">
+                                        <div
+                                            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-[0.75rem] tracking-[0.15em]"
+                                        >
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            <span>شركة الحكمة لنقل العفش</span>
+                                        </div>
+                                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight">
+                                            نقل عفشك بهدوء كامل<br class="hidden md:block" />
+                                            من باب لباب بدون صداع
+                                        </h1>
+                                        <p class="text-sm md:text-base text-slate-100/80 max-w-xl">
+                                            فريق مدرَّب، تغليف احترافي، سيارات مغلقة، وأوناش رفع حديثة
+                                            تغطي القاهرة والجيزة والمناطق المحيطة بخدمة منظمة وواضحة من
+                                            أول مكالمة حتى آخر قطعة أثاث.
+                                        </p>
+                                        <div
+                                            class="hero-cta flex flex-wrap gap-3 items-center text-sm"
+                                        >
+                                            <a
+                                                href="#"
+                                                class="btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2 shadow-soft js-open-form"
+                                            >
+                                                <i
+                                                    class="fa-solid fa-file-signature text-sm"
+                                                ></i>
+                                                <span>اطلب عرض سعر الآن</span>
+                                            </a>
+                                            <a
+                                                href="#coverage"
+                                                class="btn-ghost px-5 py-2 rounded-full border border-white/30 text-slate-100/90 flex items-center gap-2"
+                                            >
+                                                <i class="fa-regular fa-map"></i>
+                                                <span>المناطق التي نخدمها</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="hidden md:flex justify-center">
+                                        <div
+                                            class="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-4 flex flex-col gap-3 w-full max-w-sm"
+                                        >
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <div
+                                                        class="w-10 h-10 rounded-2xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center"
+                                                    >
+                                                        <i
+                                                            class="fa-solid fa-circle-check text-lg"
+                                                        ></i>
+                                                    </div>
+                                                    <div class="text-xs">
+                                                        <div class="text-slate-100">
+                                                            نسبة رضا العملاء
+                                                        </div>
+                                                        <div class="text-[0.72rem] text-slate-300">
+                                                            من مراجعات فعلية عبر الهاتف
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="text-2xl font-black text-emerald-300"
+                                                >
+                                                    98%
+                                                </div>
+                                            </div>
+                                            <div class="h-px bg-white/10"></div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-xs">
+                                                    <div class="text-slate-100 mb-1">
+                                                        متوسط زمن نقل شقة متوسطة
+                                                    </div>
+                                                    <div class="text-[0.78rem] text-slate-300">
+                                                        داخل نفس المدينة
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div
+                                                        class="text-xl font-black text-sky-200"
+                                                    >
+                                                        من 6–8 ساعات
+                                                    </div>
+                                                    <div
+                                                        class="text-[0.72rem] text-slate-300"
+                                                    >
+                                                        حسب عدد الغرف والأدوار
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="h-px bg-white/10"></div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-xs text-slate-200">
+                                                    <div>خصم حتى 25% على أول عملية نقل</div>
+                                                    <div class="text-[0.75rem] text-slate-300">
+                                                        للتجمع الخامس، مدينة نصر، الشيخ زايد،
+                                                        المقطم
+                                                    </div>
+                                                </div>
+                                                <span
+                                                    class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-100 text-[0.75rem] font-semibold"
+                                                >
+                                                    عرض لفترة محدودة
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide hero-slide relative">
+                        <img
+                            src="images/slide4.jpg"
+                            alt="فك وتركيب وتغليف"
+                            class="hero-bg-img"
+                            onerror="this.src='https://placehold.co/1200x800/0f172a/e0f2fe?text=Hekma+Moving'"
+                        />
+                        <div class="hero-overlay">
+                            <div class="section-shell hero-content">
+                                <div class="max-w-3xl space-y-5">
+                                    <div
+                                        class="inline-flex gap-2 px-3 py-1.5 rounded-full bg-black/20 border border-white/20 text-[0.72rem] tracking-[0.15em]"
+                                    >
+                                        <span class="w-2 h-2 rounded-full bg-sky-300"></span>
+                                        <span>فك – تغليف – نقل – تركيب</span>
+                                    </div>
+                                    <h2
+                                        class="text-3xl md:text-4xl lg:text-[2.7rem] font-black leading-tight"
+                                    >
+                                        خدمة نقل عفش متكاملة<br class="hidden md:block" />
+                                        بخطوات واضحة ومنظمة
+                                    </h2>
+                                    <p class="text-sm md:text-base text-slate-100/80 max-w-xl">
+                                        نفك غرف النوم، المطابخ، الأجهزة، نغلف كل قطعة بما يناسبها،
+                                        ننقلها بسيارات مجهزة، ثم نركبها في مكانها الجديد كما تريد،
+                                        مع مراعاة هدوء البيت والجيران.
+                                    </p>
+                                    <div
+                                        class="hero-cta flex flex-wrap items-center gap-3 text-sm"
+                                    >
+                                        <a
+                                            href="#services"
+                                            class="btn-primary bg-gradient-to-l from-brand-secondary to-brand-primary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2 shadow-soft"
+                                        >
+                                            <i class="fa-solid fa-layer-group"></i>
+                                            <span>شاهد تفاصيل خدماتنا</span>
+                                        </a>
+                                        <span class="text-xs md:text-sm text-slate-100/80">
+                                            أو تواصل معنا مباشرة لترتيب زيارة ومعاينة بسيطة.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide hero-slide relative">
+                        <img
+                            src="images/slide1.png"
+                            alt="أوناش رفع حديثة"
+                            class="hero-bg-img"
+                            onerror="this.src='https://placehold.co/1200x800/0f172a/e0f2fe?text=Hekma+Moving'"
+                        />
+                        <div class="hero-overlay">
+                            <div class="section-shell hero-content">
+                                <div class="max-w-3xl space-y-5">
+                                    <div
+                                        class="inline-flex gap-2 px-3 py-1.5 rounded-full bg-black/20 border border-white/20 text-[0.72rem] tracking-[0.15em]"
+                                    >
+                                        <span class="w-2 h-2 rounded-full bg-violet-300"></span>
+                                        <span>حلول للأدوار العالية والمداخل الضيقة</span>
+                                    </div>
+                                    <h2
+                                        class="text-3xl md:text-4xl lg:text-[2.7rem] font-black leading-tight"
+                                    >
+                                        أوناش هيدروليك حديثة<br class="hidden md:block" />
+                                        تحافظ على الأثاث والحائط معًا
+                                    </h2>
+                                    <p class="text-sm md:text-base text-slate-100/80 max-w-xl">
+                                        نستخدم أوناش رفع مجهزة لنقل الأثاث من وإلى الأدوار العليا
+                                        بأمان، بدون جرِّ العفش على السلالم أو الاحتكاك بجدران
+                                        العمارة.
+                                    </p>
+                                    <div
+                                        class="hero-cta flex flex-wrap items-center gap-3 text-sm"
+                                    >
+                                        <a
+                                            href="#fleet"
+                                            class="btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2 shadow-soft"
+                                        >
+                                            <i class="fa-solid fa-arrow-up-wide-short"></i>
+                                            <span>اعرف أكثر عن معداتنا</span>
+                                        </a>
+                                        <span class="text-xs md:text-sm text-slate-100/85">
+                                            مناسب للأبراج، الكمبوندات، والشوارع الضيقة.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="swiper-pagination hero-pagination"></div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="py-16">
+            <div class="section-shell">
+                <div class="shell-card bg-layout-subtle space-y-10">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            لماذا يختار الناس شركة الحكمة لنقل العفش؟
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base leading-relaxed">
+                            لأننا نتعامل مع عملية نقل العفش كأنها مشروع منظم، وليس مجرد
+                            يوم عشوائي مليان توتر. نخطط، نوضح، ننفذ بهدوء، ونترك بيتك
+                            الجديد جاهزًا للاستعمال.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="card bg-layout-surface rounded-2xl p-6 text-center">
+                            <div class="icon-pill mb-4 mx-auto">
+                                <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+                            </div>
+                            <h3 class="text-base font-semibold mb-1.5">
+                                مواعيد واضحة لا تُكسر
+                            </h3>
+                            <p class="text-brand-muted text-sm leading-relaxed">
+                                نحدد وقت الوصول والانتهاء قبل التنفيذ، ونتعامل مع الوقت كجزء
+                                أساسي من الخدمة، ليس مجرد رقم تقريبي.
+                            </p>
+                        </div>
+                        <div class="card bg-layout-surface rounded-2xl p-6 text-center">
+                            <div class="icon-pill mb-4 mx-auto">
+                                <i class="fa-solid fa-shield-heart text-lg"></i>
+                            </div>
+                            <h3 class="text-base font-semibold mb-1.5">
+                                عناية واحترام داخل البيت
+                            </h3>
+                            <p class="text-brand-muted text-sm leading-relaxed">
+                                فريق مدرب على التعامل بهدوء واحترام مع البيت والأثاث
+                                والجيران، بدون ضوضاء أو فوضى في المكان.
+                            </p>
+                        </div>
+                        <div class="card bg-layout-surface rounded-2xl p-6 text-center">
+                            <div class="icon-pill mb-4 mx-auto">
+                                <i class="fa-solid fa-file-signature text-lg"></i>
+                            </div>
+                            <h3 class="text-base font-semibold mb-1.5">
+                                وضوح في السعر والاتفاق
+                            </h3>
+                            <p class="text-brand-muted text-sm leading-relaxed">
+                                عرض سعر واضح يشمل كل شيء: فك، تغليف، نقل، تركيب، وأي إضافات،
+                                بدون بنود مفاجئة بعد التنفيذ.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COVERAGE -->
+        <section id="coverage" class="pb-16">
+            <div class="section-shell space-y-10">
+                <div class="shell-card bg-layout-surface space-y-7">
+                    <div class="text-center max-w-3xl mx-auto space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            تغطية واسعة داخل القاهرة والجيزة
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base leading-relaxed">
+                            نخدم مدينة نصر، مصر الجديدة، التجمع الخامس، مدينتي، الرحاب،
+                            الشيخ زايد، المعادي، حلوان، المهندسين، الدقي، العجوزة، شيراتون،
+                            النزهة الجديدة، جسر السويس، المقطم، العبور، أكتوبر، فيصل، الهرم،
+                            العمرانية، وعين شمس.
+                        </p>
+                    </div>
+
+                    <div
+                        class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm text-brand-muted"
+                    >
+                        <!-- Example card – مدينة نصر -->
+                        <div class="card bg-layout-subtle rounded-2xl overflow-hidden">
+                            <img
+                                src="images/نقل_عفش_مدينة_نصر.jpg"
+                                alt="نقل عفش مدينة نصر"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Moving+in+Nasr+City'"
+                            />
+                            <div class="p-5 space-y-1.5 text-right">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    نقل عفش مدينة نصر
+                                </h3>
+                                <p class="leading-relaxed">
+                                    خدمة سريعة تغطي الحي العاشر، الحي السابع، عباس
+                                    العقاد، ومكرم عبيد مع سيارات قريبة جاهزة للتحرك.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-subtle rounded-2xl overflow-hidden">
+                            <img
+                                src="images/نقل-عفش-مصر-الجديدة.jpg"
+                                alt="نقل عفش مصر الجديدة"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Moving+in+Heliopolis'"
+                            />
+                            <div class="p-5 space-y-1.5 text-right">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    نقل عفش مصر الجديدة
+                                </h3>
+                                <p class="leading-relaxed">
+                                    من الكوربة حتى النزهة الجديدة، نقل منظم مع تغليف
+                                    كامل للأثاث وحفاظ على الهدوء داخل العمارة.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-subtle rounded-2xl overflow-hidden">
+                            <img
+                                src="images/نقل-عفش-التجمع-الخامس-ومدينتي-والرحاب.jpg"
+                                alt="نقل عفش التجمع ومدينتي والرحاب"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Moving+in+New+Cairo'"
+                            />
+                            <div class="p-5 space-y-1.5 text-right">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    التجمع الخامس ومدينتي والرحاب
+                                </h3>
+                                <p class="leading-relaxed">
+                                    خبرة في التعامل مع الكمبوندات، تصاريح الدخول، تنظيم
+                                    العربيات والمصاعد، وترتيب العفش حسب رغبتك.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-subtle rounded-2xl overflow-hidden">
+                            <img
+                                src="images/نقل-عفش-الشيخ-زايد-و6-أكتوبر.jpg"
+                                alt="نقل عفش الشيخ زايد وأكتوبر"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Moving+in+Zayed+%26+October'"
+                            />
+                            <div class="p-5 space-y-1.5 text-right">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    الشيخ زايد و6 أكتوبر
+                                </h3>
+                                <p class="leading-relaxed">
+                                    مناسب للفيلات والشقق الكبيرة مع إمكانية زيادة عدد
+                                    العمال لتقليل وقت التنفيذ.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-subtle rounded-2xl overflow-hidden">
+                            <img
+                                src="images/نقل-عفش-المعادي-وحلوان.jpg"
+                                alt="نقل عفش المعادي وحلوان"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Moving+in+Maadi'"
+                            />
+                            <div class="p-5 space-y-1.5 text-right">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    المعادي وحلوان
+                                </h3>
+                                <p class="leading-relaxed">
+                                    نقل عفش من وإلى المعادي وحدائق حلوان مع مراعاة
+                                    الشوارع الضيقة والزمن المناسب لحركة العربيات.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-subtle rounded-2xl overflow-hidden">
+                            <img
+                                src="images/نقل-عفش-المهندسين-والدقي-والعجوزة.jpg"
+                                alt="نقل عفش المهندسين والدقي"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Moving+in+Mohandeseen'"
+                            />
+                            <div class="p-5 space-y-1.5 text-right">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    المهندسين والدقي والعجوزة
+                                </h3>
+                                <p class="leading-relaxed">
+                                    تنظيم وقوف العربيات، التعامل مع الزحام، وإنجاز
+                                    النقل في أقل عدد ساعات ممكن.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-brand-soft/60 border border-sky-100 rounded-2xl px-4 py-4 md:px-7 md:py-5 flex flex-col md:flex-row items-center justify-between gap-3"
+                    >
+                        <div class="text-sm md:text-base text-brand-muted">
+                            <span class="font-semibold text-brand-text">
+                                حتى لو منطقتك مش مذكورة هنا،
+                            </span>
+                            اسألنا، في الغالب نغطيها أو نرتب لك حل مناسب.
+                        </div>
+                        <a
+                            href="#"
+                            class="btn-primary bg-white text-brand-secondary border border-sky-100 px-5 py-2 rounded-full text-xs md:text-sm font-semibold flex items-center gap-2 js-confirm-call"
+                        >
+                            <i class="fa-solid fa-phone -scale-x-100"></i>
+                            <span>استفسر عن منطقتك الآن</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <section class="pb-16">
+            <div class="section-shell">
+                <div
+                    class="bg-layout-surface rounded-2xl border border-slate-200 shadow-soft px-5 md:px-10 py-7 md:py-9"
+                >
+                    <div
+                        id="stats-bar"
+                        class="grid grid-cols-2 md:grid-cols-4 gap-7 text-center"
+                    >
+                        <div class="flex flex-col items-center gap-1">
+                            <div
+                                class="counter-stat text-3xl md:text-4xl font-black text-brand-primary"
+                                data-target="12000"
+                                data-prefix="+"
+                            >
+                                0
+                            </div>
+                            <div class="text-xs md:text-sm text-brand-muted">
+                                عميل تم خدمتهم
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center gap-1">
+                            <div
+                                class="counter-stat text-3xl md:text-4xl font-black text-brand-primary"
+                                data-target="25000"
+                                data-prefix="+"
+                            >
+                                0
+                            </div>
+                            <div class="text-xs md:text-sm text-brand-muted">
+                                عملية نقل مكتملة
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center gap-1">
+                            <div
+                                class="counter-stat text-3xl md:text-4xl font-black text-brand-primary"
+                                data-target="27"
+                            >
+                                0
+                            </div>
+                            <div class="text-xs md:text-sm text-brand-muted">
+                                محافظة نصل إليها
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center gap-1">
+                            <div
+                                class="counter-stat text-3xl md:text-4xl font-black text-brand-primary"
+                                data-target="100"
+                                data-suffix="%"
+                            >
+                                0
+                            </div>
+                            <div class="text-xs md:text-sm text-brand-muted">
+                                تركيز على الأمان
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section id="services" class="pb-16">
+            <div class="section-shell">
+                <div class="shell-card bg-layout-subtle space-y-9">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            خدماتنا في نقل العفش خطوة بخطوة
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base leading-relaxed">
+                            بدل ما تتعامل مع أكثر من جهة، نوفر لك باقة خدمات كاملة تغطي كل
+                            تفاصيل النقل من أول فك المسمار الأخير إلى تركيب آخر قطعة.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+                        <div class="card bg-layout-surface rounded-2xl p-6 flex gap-4">
+                            <div class="icon-pill mt-1">
+                                <i class="fa-solid fa-box-open text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    تغليف احترافي
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    خامات تغليف مختلفة للأثاث الزجاجي، الخشبي، والأجهزة،
+                                    بحيث تتحمل النقل بدون خدوش أو كسر.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl p-6 flex gap-4">
+                            <div class="icon-pill mt-1">
+                                <i class="fa-solid fa-screwdriver-wrench text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    فك وتركيب الأثاث
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    نجَّارين وفنيين لفك وتركيب غرف النوم، المطابخ، الأبواب،
+                                    والقطع المعقّدة مثل أثاث ايكيا.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl p-6 flex gap-4">
+                            <div class="icon-pill mt-1">
+                                <i class="fa-solid fa-truck-moving text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    سيارات نقل مغلقة
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    سيارات بأحجام مختلفة، مبطنة من الداخل للحفاظ على
+                                    الأثاث من الاحتكاك والأتربة والمطر.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl p-6 flex gap-4">
+                            <div class="icon-pill mt-1">
+                                <i class="fa-solid fa-arrow-up-from-ground-water text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    رفع بالونش الهيدروليك
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    حل عملي للأدوار العالية والمباني ذات المداخل الضيقة،
+                                    بدون جرِّ العفش على السلالم.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl p-6 flex gap-4">
+                            <div class="icon-pill mt-1">
+                                <i class="fa-solid fa-building text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    نقل مكاتب وشركات
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    نقل منظم للمكاتب مع ترتيب لأجهزة الكمبيوتر، الطابعات،
+                                    والكابلات دون إرباك لعمل الموظفين.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl p-6 flex gap-4">
+                            <div class="icon-pill mt-1">
+                                <i class="fa-solid fa-piano text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    نقل القطع الحساسة
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    بيانو، تحف، لوحات فنية، وأجهزة دقيقة يتم التعامل معها
+                                    بخطوات خاصة وتغليف إضافي.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <a
+                            href="#"
+                            class="btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary text-white text-sm font-semibold px-7 py-2.5 rounded-full js-open-form"
+                        >
+                            احصل على عرض سعر مبسط الآن
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section id="process" class="pb-16">
+            <div class="section-shell">
+                <div class="shell-card bg-layout-surface space-y-9">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            4 خطوات واضحة لنقل عفشك
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base leading-relaxed">
+                            نوضح لك كل خطوة قبل التنفيذ، بحيث تبقى الصورة كاملة عندك من أول
+                            تواصل وحتى استلام بيتك الجديد مرتب وجاهز.
+                        </p>
+                    </div>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-sm md:text-base">
+                        <div class="timeline-item">
+                            <div class="timeline-dot">1</div>
+                            <h3 class="text-base font-semibold text-brand-text mb-1.5">
+                                تواصل بسيط لتوضيح التفاصيل
+                            </h3>
+                            <p class="text-brand-muted leading-relaxed">
+                                تتواصل معنا بالهاتف أو واتساب، وتحدد المنطقة الحالية،
+                                الجديدة، عدد الغرف، وجود أدوار عالية أو أوناش، وأي ملاحظات
+                                مهمة.
+                            </p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot">2</div>
+                            <h3 class="text-base font-semibold text-brand-text mb-1.5">
+                                عرض سعر مكتوب وواضح
+                            </h3>
+                            <p class="text-brand-muted leading-relaxed">
+                                نرسل لك عرض سعر يشمل كل البنود: فك، تغليف، نقل، تركيب،
+                                وأي خدمات إضافية، مع توضيح طريقة الدفع ووقت التنفيذ.
+                            </p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot">3</div>
+                            <h3 class="text-base font-semibold text-brand-text mb-1.5">
+                                يوم التنفيذ بهدوء وتنظيم
+                            </h3>
+                            <p class="text-brand-muted leading-relaxed">
+                                يصل الفريق في المعاد، يتم تغليف الأثاث، تحميله في السيارات
+                                بعناية، ونقله للعنوان الجديد بحسب الخطة المتفق عليها.
+                            </p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot">4</div>
+                            <h3 class="text-base font-semibold text-brand-text mb-1.5">
+                                تركيب وترتيب ثم تسليم
+                            </h3>
+                            <p class="text-brand-muted leading-relaxed">
+                                نركب الأثاث والأجهزة، نضع كل شيء في مكانه، ونترك لك البيت
+                                في صورة مناسبة للاستعمال مباشرة قدر الإمكان.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY US / FLEET -->
+        <section id="fleet" class="pb-16">
+            <div class="section-shell">
+                <div class="shell-card bg-layout-subtle space-y-8">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            عناصر القوة في شركة الحكمة
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base leading-relaxed">
+                            بدل ما تعتمد على الحظ في اختيار شركة نقل عفش، هذه أهم النقاط
+                            التي نركز عليها في شغلنا يوميًا.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+                        <div class="card bg-layout-surface rounded-2xl overflow-hidden">
+                            <img
+                                src="images/عمالة-مدربة-باحترافية.png"
+                                alt="عمالة مدربة"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Trained+Team'"
+                            />
+                            <div class="p-5 space-y-1.5 text-center">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    طاقم عمل محترف وهادئ
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    عمالة ونجارين مدربين، يعرفون خطواتهم جيدًا، ويتعاملون
+                                    مع البيت والأثاث والجيران باحترام حقيقي.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl overflow-hidden">
+                            <img
+                                src="images/تغليف-آمن-ومواد-عالية-الجودة.jpg"
+                                alt="تغليف آمن"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Safe+Packaging'"
+                            />
+                            <div class="p-5 space-y-1.5 text-center">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    تغليف يناسب كل قطعة
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    لا نستخدم خامة واحدة لكل شيء، بل نختار نوع التغليف
+                                    حسب طبيعة الأثاث وقيمته وحساسيته.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-layout-surface rounded-2xl overflow-hidden">
+                            <img
+                                src="images/سيارات-نقل-مجهزة-ومغلقة.png"
+                                alt="سيارات نقل مجهزة"
+                                class="w-full h-40 object-cover"
+                                onerror="this.src='https://placehold.co/400x300/f9fafb/6b7280?text=Equipped+Trucks'"
+                            />
+                            <div class="p-5 space-y-1.5 text-center">
+                                <h3 class="text-base font-semibold text-brand-text">
+                                    أسطول سيارات متنوع
+                                </h3>
+                                <p class="text-brand-muted leading-relaxed">
+                                    سيارات صغيرة وكبيرة، مغلقة ومبطنة، لاستخدام الحجم
+                                    الأنسب لشغلك وتوفير الوقت والتكلفة.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <a
+                            href="#"
+                            class="btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary text-white text-sm font-semibold px-7 py-2.5 rounded-full flex items-center gap-2 js-open-form"
+                        >
+                            <i class="fa-solid fa-file-signature text-sm"></i>
+                            <span>تحدث معنا عن احتياجك بالتفصيل</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="testimonials" class="pb-16">
+            <div class="section-shell">
+                <div class="shell-card bg-layout-surface space-y-8">
+                    <div class="text-center max-w-xl mx-auto space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            آراء بعض عملائنا
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base leading-relaxed">
+                            جزء كبير من شغلنا يأتي عن طريق ترشيح عملاء سابقين،
+                            لذلك نعتبر كل عملية نقل بداية علاقة طويلة وليست مرة واحدة.
+                        </p>
+                    </div>
+
+                    <div class="relative max-w-2xl mx-auto">
+                        <div class="slider-container">
+                            <div id="slider-wrapper" class="slider-wrapper">
+                                <div class="slider-slide p-1.5">
+                                    <div
+                                        class="bg-layout-subtle border border-slate-200 rounded-2xl p-7 text-center shadow-card"
+                                    >
+                                        <img
+                                            src="https://placehold.co/64x64/e2e8f0/6b7280?text=A"
+                                            alt="عميل"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3 border border-slate-200 object-cover"
+                                        />
+                                        <p
+                                            class="text-brand-muted italic text-sm md:text-base mb-4 leading-relaxed"
+                                        >
+                                            "نقلت من المعادي للتجمع، فريق منظم جدًا، هاديين،
+                                            وخلصوا في المعاد المتفق عليه بدون أي تلفيات في
+                                            الأثاث."
+                                        </p>
+                                        <p class="text-sm font-semibold text-brand-text">
+                                            م. أحمد – التجمع الخامس
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="slider-slide p-1.5">
+                                    <div
+                                        class="bg-layout-subtle border border-slate-200 rounded-2xl p-7 text-center shadow-card"
+                                    >
+                                        <img
+                                            src="https://placehold.co/64x64/e2e8f0/6b7280?text=M"
+                                            alt="عميلة"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3 border border-slate-200 object-cover"
+                                        />
+                                        <p
+                                            class="text-brand-muted italic text-sm md:text-base mb-4 leading-relaxed"
+                                        >
+                                            "كنت خايفة على غرفة الأطفال والنيش، لكن الصراحة
+                                            التغليف كان ممتاز وكل حاجة وصلت سليمة."
+                                        </p>
+                                        <p class="text-sm font-semibold text-brand-text">
+                                            أ. منى – مدينة نصر
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            id="prev-slide"
+                            class="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-6 w-9 h-9 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:text-brand-primary hover:border-brand-primary"
+                        >
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                        <button
+                            id="next-slide"
+                            class="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-6 w-9 h-9 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:text-brand-primary hover:border-brand-primary"
+                        >
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="pb-16">
+            <div class="section-shell">
+                <div class="shell-card bg-layout-surface space-y-7">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center text-brand-text">
+                        أسئلة متكررة قبل نقل العفش
+                    </h2>
+                    <div class="space-y-3" id="faq-accordion">
+                        <div class="bg-layout-subtle rounded-2xl border border-slate-200">
+                            <button
+                                class="accordion-button w-full flex justify-between items-center text-right text-sm md:text-base font-semibold px-4 md:px-5 py-4"
+                                aria-expanded="false"
+                            >
+                                <span class="text-brand-text">
+                                    كيف يتم حساب تكلفة نقل العفش؟
+                                </span>
+                                <span class="text-brand-secondary text-lg">
+                                    <i class="fa-solid fa-plus icon-plus"></i>
+                                    <i class="fa-solid fa-minus icon-minus"></i>
+                                </span>
+                            </button>
+                            <div
+                                class="accordion-content text-brand-muted px-4 md:px-5 pb-4 text-sm md:text-base"
+                            >
+                                <p class="leading-relaxed">
+                                    حسب حجم الأثاث، عدد الغرف، المسافة بين المكانين،
+                                    عدد الأدوار، ضرورة استخدام ونش من عدمه، والخدمات
+                                    الإضافية مثل الفك والتركيب. نوضح لك التكلفة قبل أي خطوة.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-layout-subtle rounded-2xl border border-slate-200">
+                            <button
+                                class="accordion-button w-full flex justify-between items-center text-right text-sm md:text-base font-semibold px-4 md:px-5 py-4"
+                                aria-expanded="false"
+                            >
+                                <span class="text-brand-text">
+                                    هل يوجد ضمان على الأثاث أثناء النقل؟
+                                </span>
+                                <span class="text-brand-secondary text-lg">
+                                    <i class="fa-solid fa-plus icon-plus"></i>
+                                    <i class="fa-solid fa-minus icon-minus"></i>
+                                </span>
+                            </button>
+                            <div
+                                class="accordion-content text-brand-muted px-4 md:px-5 pb-4 text-sm md:text-base"
+                            >
+                                <p class="leading-relaxed">
+                                    نعم، يوجد ضمان ضد التلفيات الناتجة عن تقصير في النقل
+                                    أو التغليف من جانبنا، ونوضح تفاصيل الضمان داخل
+                                    الاتفاق قبل التنفيذ.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-layout-subtle rounded-2xl border border-slate-200">
+                            <button
+                                class="accordion-button w-full flex justify-between items-center text-right text-sm md:text-base font-semibold px-4 md:px-5 py-4"
+                                aria-expanded="false"
+                            >
+                                <span class="text-brand-text">
+                                    كم يستغرق نقل شقة متوسطة الحجم؟
+                                </span>
+                                <span class="text-brand-secondary text-lg">
+                                    <i class="fa-solid fa-plus icon-plus"></i>
+                                    <i class="fa-solid fa-minus icon-minus"></i>
+                                </span>
+                            </button>
+                            <div
+                                class="accordion-content text-brand-muted px-4 md:px-5 pb-4 text-sm md:text-base"
+                            >
+                                <p class="leading-relaxed">
+                                    في الأغلب من نصف يوم إلى يوم كامل داخل نفس المدينة،
+                                    حسب عدد الغرف، الأدوار، وطبيعة المكانين (كمبوند، برج،
+                                    شارع ضيق... إلخ).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT (FORM REMOVED, Handled by Modal) -->
+        <section id="contact" class="pb-4">
+            <div class="section-shell">
+                <div
+                    class="shell-card bg-gradient-to-l from-brand-primary/10 via-layout-surface to-brand-secondary/5 max-w-3xl mx-auto space-y-6"
+                >
+                    <div class="text-center space-y-3">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-text">
+                            جاهز تخلي نقل العفش خطوة بسيطة وواضحة؟
+                        </h2>
+                        <p class="text-brand-muted text-sm md:text-base max-w-xl mx-auto">
+                            كلمنا أو ابعت لنا تفاصيل بسيطة عن النقل، وهنرجع لك بعرض سعر
+                            واضح وخطة عمل مريحة.
+                        </p>
+                    </div>
+
+                    <div
+                        class="flex flex-col items-center gap-1 text-brand-text text-lg md:text-2xl font-black"
+                    >
+                        <a
+                            href="#"
+                            class="flex items-center gap-2 hover:underline js-confirm-call"
+                        >
+                            <i
+                                class="fa-solid fa-phone -scale-x-100 text-brand-primary text-xl"
+                            ></i>
+                            <span>01068224441</span>
+                        </a>
+                        <div class="text-xs text-brand-muted">
+                            مكالمة واحدة تكفي لتوضيح كل شيء.
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                         <button
+                            type="button"
+                            class="btn-primary w-full max-w-sm bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold p-3.5 rounded-xl text-sm js-open-form"
+                        >
+                            اطلب عرض سعر لنقل عفشك
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark text-slate-400 pt-8 pb-6">
+        <div class="section-shell">
+            <div class="grid md:grid-cols-4 gap-8 text-right text-xs md:text-sm">
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <!-- LOGO IMAGE ADDED -->
+                        <img src="images/logo.jpg" alt="شعار شركة الحكمة" class="w-8 h-8 rounded-2xl object-cover" />
+                        
+                        <div>
+                            <div class="text-white text-sm font-semibold">
+                                شركة الحكمة لنقل العفش
+                            </div>
+                            <div class="text-[0.7rem] text-slate-400">
+                                نقل هادئ ومنظم داخل مصر
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-[0.72rem] leading-relaxed">
+                        نساعدك تنقل من بيت لبيت أو من مكتب لمكتب بأقل قدر ممكن من
+                        التوتر، مع اهتمام حقيقي بالتفاصيل في كل خطوة.
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 text-lg">
+                        <a href="#" class="hover:text-brand-primary">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a
+                            href="https."
+                            class="hover:text-brand-primary"
+                        >
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="hover:text-brand-primary">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="hover:text-brand-primary">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-sm font-semibold mb-3">روابط سريعة</h4>
+                    <ul class="space-y-1.5">
+                        <li><a href="#about" class="hover:text-brand-primary">من نحن</a></li>
+                        <li><a href="#services" class="hover:text-brand-primary">خدماتنا</a></li>
+                        <li><a href="#process" class="hover:text-brand-primary">طريقة العمل</a></li>
+                        <li><a href="#contact" class="hover:text-brand-primary js-confirm-call">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-sm font-semibold mb-3">
+                        مناطق الخدمة
+                    </h4>
+                    <ul class="space-y-1.5">
+                        <li>القاهرة الكبرى</li>
+                        <li>الجيزة والمناطق المجاورة</li>
+                        <li>مدن أكتوبر والشيخ زايد</li>
+                        <li>بعض مدن الدلتا حسب الاتفاق</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-sm font-semibold mb-3">
+                        معلومات الاتصال
+                    </h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2">
+                            <i
+                                class="fa-solid fa-location-dot text-brand-primary mt-0.5 text-sm"
+                            ></i>
+                            <span>ميدان الجيش - العباسية، القاهرة، مصر</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i
+                                class="fa-solid fa-phone text-brand-primary mt-0.5 text-sm"
+                            ></i>
+                            <a href="#" class="hover:text-brand-primary js-confirm-call">01068224441</a>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i
+                                class="fa-solid fa-envelope text-brand-primary mt-0.5 text-sm"
+                            ></i>
+                            <span>info@example.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-slate-800 mt-6 pt-4 text-[0.7rem] text-center text-slate-500"
+            >
+                &copy; 2024 شركة الحكمة لنقل العفش. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Facebook -->
+    <a
+        href="https."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 bg-[#1877F2] text-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-card hover:scale-105 transition-transform"
+        aria-label="فيسبوك شركة الحكمة"
+    >
+        <i class="fab fa-facebook-f text-xl md:text-2xl"></i>
+    </a>
+
+    <!-- Floating Call (Now Form) -->
+    <div
+        class="fixed bottom-6 left-6 z-50 flex flex-col space-y-2"
+    >
+        <a
+            href="#"
+            class="flex items-center justify-center bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-full shadow-card hover:scale-105 transition-transform text-sm js-open-form"
+        >
+            <i
+                class="fa-solid fa-file-signature text-sm mr-1.5"
+            ></i>
+            <span>اعرف سعر نقل العفش</span>
+        </a>
+    </div>
+
+    <!-- Call Confirmation Modal -->
+    <div id="call-modal" class="fixed inset-0 z-[99] flex items-center justify-center p-4 hidden">
+        <!-- Backdrop -->
+        <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative z-10 bg-white w-full max-w-md rounded-2xl shadow-xl p-6 md:p-8 text-center">
+            
+            <!-- Step 1: Initial Confirmation -->
+            <div id="modal-step-1">
+                <div class="w-14 h-14 rounded-full bg-brand-soft text-brand-primary flex items-center justify-center text-2xl mx-auto mb-4">
+                    <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <h3 class="text-xl font-bold text-brand-text mb-2">تأكيد الاتصال</h3>
+                <p class="text-brand-muted text-sm leading-relaxed mb-6">
+                    هل أنت متأكد أنك تريد الاتصال بنا الآن؟
+                    <br>
+                    هذه الخطوة للتأكد من جدية الطلب.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button id="modal-next-btn" class="w-full btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold py-3 rounded-xl text-sm">
+                        نعم، أريد الاتصال
+                    </button>
+                    <button id="modal-cancel-btn-1" class="w-full bg-slate-100 text-slate-700 font-semibold py-3 rounded-xl text-sm hover:bg-slate-200">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Final Call -->
+            <div id="modal-step-2" class="hidden">
+                 <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto mb-4">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-xl font-bold text-brand-text mb-2">الخطوة الأخيرة</h3>
+                <p class="text-brand-muted text-sm leading-relaxed mb-6">
+                    شكرًا لاهتمامك. بالضغط على الزر بالأسفل سيتم تحويلك للاتصال المباشر.
+                </p>
+                <a
+                    href="tel:01068224441"
+                    class="block w-full btn-primary bg-emerald-500 text-white font-semibold py-3 rounded-xl text-sm shadow-lg hover:bg-emerald-600"
+                >
+                    <i class="fa-solid fa-phone -scale-x-100 text-sm ml-2"></i>
+                    اضغط هنا للاتصال (01068224441)
+                </a>
+                <button id="modal-back-btn" class="w-full text-slate-600 font-medium py-3 rounded-xl text-xs sm:text-sm hover:bg-slate-50 mt-3">
+                    الرجوع
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Quote Request Form Modal -->
+    <div id="form-modal" class="fixed inset-0 z-[99] flex items-start md:items-center justify-center p-4 pt-12 md:pt-4 overflow-y-auto hidden">
+        <!-- Backdrop -->
+        <div id="form-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative z-10 bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b border-slate-200">
+                <div class="flex items-center gap-2">
+                    <img src="images/logo.jpg" alt="شعار شركة الحكمة" class="w-8 h-8 rounded-xl object-cover" />
+                    <div>
+                        <div class="text-sm font-semibold text-brand-text">شركة الحكمة</div>
+                        <div class="text-xs text-brand-muted">اطلب عرض سعر سريع</div>
+                    </div>
+                </div>
+                <button id="close-form-modal-btn" class="w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 flex items-center justify-center">
+                    <i class="fa-solid fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-4 md:p-6">
+                <!-- Form -->
+                <form id="quote-form" class="space-y-4 text-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                         <input
+                            type="text"
+                            id="form-name"
+                            placeholder="الاسم بالكامل *"
+                            required
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                         <!-- --- تعديل --- -->
+                         <!-- حقل الهاتف وزر إرسال الكود -->
+                        <div class="flex items-center gap-2">
+                            <input
+                                type="tel"
+                                id="form-phone"
+                                placeholder="رقم الهاتف (واتساب) *"
+                                required
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                            <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
+                                إرسال الكود
+                            </button>
+                        </div>
+                         <!-- --- نهاية التعديل --- -->
+                    </div>
+
+                    <!-- --- إضافة --- -->
+                    <!-- حقل كود التحقق (مخفي مبدئيًا) -->
+                    <div id="verification-container" class="hidden space-y-2">
+                        <p class="text-xs text-brand-muted">تم إرسال كود التحقق إلى رقم الواتساب الخاص بك.</p>
+                        <div class="flex items-center gap-2">
+                            <input
+                                type="text"
+                                id="verification-code"
+                                placeholder="أدخل كود التحقق"
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                            <button type="button" id="verify-code-btn" class="flex-shrink-0 px-4 py-3 rounded-xl bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600">
+                                تأكيد
+                            </button>
+                        </div>
+                         <div id="verification-status" class="text-xs"></div>
+                    </div>
+                    <!-- --- نهاية الإضافة --- -->
+
+                    <!-- --- إضافة: رابط الاتصال بعد التحقق --- -->
+                    <div id="verified-call-prompt" class="hidden pt-2 text-center">
+                        <p class="text-xs text-brand-muted mb-2">تم تأكيد رقمك! يمكنك الآن إرسال الطلب، أو</p>
+                        <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
+                            <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
+                            <span>الاتصال المباشر: 01068224441</span>
+                        </a>
+                    </div>
+                    <!-- --- نهاية الإضافة --- -->
+
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input
+                            type="text"
+                            id="form-from"
+                            placeholder="النقل من (المنطقة) *"
+                            required
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                        <input
+                            type="text"
+                            id="form-to"
+                            placeholder="النقل إلى (المنطقة) *"
+                            required
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <select id="form-rooms" class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text" required>
+                            <option value="">عدد الغرف؟ *</option>
+                            <option value="1">غرفة واحدة</option>
+                            <option value="2">غرفتين</option>
+                            <option value="3">3 غرف</option>
+                            <option value="4">4 غرف</option>
+                            <option value="5+">5 غرف أو أكثر</option>
+                        </select>
+                        <select id="form-type" class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text" required>
+                            <option value="">نوع المكان؟ *</option>
+                            <option value="شقة">شقة</option>
+                            <option value="فيلا">فيلا</option>
+                            <option value="مكتب">مكتب/شركة</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                       <input
+                            type="number"
+                            id="form-floor-from"
+                            placeholder="الدور الحالي؟"
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                         <input
+                            type="number"
+                            id="form-floor-to"
+                            placeholder="الدور الجديد؟"
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                    </div>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
+                            <label for="elevator_from" class="text-brand-muted">مصعد (الحالي)؟</label>
+                            <input type="radio" id="elevator_from_yes" name="elevator_from" value="نعم">
+                            <label for="elevator_from_yes">نعم</label>
+                            <input type="radio" id="elevator_from_no" name="elevator_from" value="لا" class="mr-2" checked>
+                            <label for="elevator_from_no">لا</label>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
+                            <label for="elevator_to" class="text-brand-muted">مصعد (الجديد)؟</label>
+                            <input type="radio" id="elevator_to_yes" name="elevator_to" value="نعم">
+                            <label for="elevator_to_yes">نعم</label>
+                            <input type="radio" id="elevator_to_no" name="elevator_to" value="لا" class="mr-2" checked>
+                            <label for="elevator_to_no">لا</label>
+                        </div>
+                    </div>
+                    <textarea
+                        id="form-details"
+                        placeholder="أي تفاصيل إضافية؟ (مثل: ونش، فك وتركيب، تغليف...)"
+                        class="w-full p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text min-h-[80px]"
+                    ></textarea>
+
+                    <!-- --- إضافة --- -->
+                    <!-- منطقة رسائل الخطأ أو النجاح -->
+                    <div id="form-message" class="text-xs text-center p-2 hidden"></div>
+                    <!-- --- نهاية الإضافة --- -->
+
+                    <!-- --- تعديل --- -->
+                    <!-- تم إضافة id و disabled -->
+                    <button
+                        type="submit"
+                        id="submit-quote-btn"
+                        class="btn-primary w-full bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold p-3.5 rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled 
+                    >
+                        إرسال الطلب (برجاء تأكيد الرقم أولاً)
+                    </button>
+                    <!-- --- نهاية التعديل --- -->
+                </form>
+
+                <!-- Success Message -->
+                <div id="form-success-message" class="hidden text-center py-10">
+                    <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto mb-4">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-text mb-2">تم استلام طلبك</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed">
+                        شكرًا لك. سيقوم أحد ممثلينا بالتواصل معك قريبًا جدًا لتأكيد التفاصيل.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script>
+        // Mobile menu
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener("click", () => {
+                mobileMenu.classList.toggle("hidden");
+            });
+        }
+
+        // Testimonials slider
+        const sliderWrapper = document.getElementById("slider-wrapper");
+        const prevButton = document.getElementById("prev-slide");
+        const nextButton = document.getElementById("next-slide");
+        let currentIndex = 0;
+        if (sliderWrapper && prevButton && nextButton) {
+            const slides = sliderWrapper.querySelectorAll(".slider-slide");
+            const totalSlides = slides.length;
+
+            const updateSlider = () => {
+                sliderWrapper.style.transform = `translateX(-${
+                    currentIndex * 100
+                }%)`;
+            };
+
+            nextButton.addEventListener("click", () => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlider();
+            });
+            prevButton.addEventListener("click", () => {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateSlider();
+            });
+        }
+
+        // Stats counter
+        const statsBar = document.getElementById("stats-bar");
+        const animateCounter = (el) => {
+            const target = +el.getAttribute("data-target");
+            const prefix = el.getAttribute("data-prefix") || "";
+            const suffix = el.getAttribute("data-suffix") || "";
+            const duration = 2000;
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentValue = Math.floor(progress * target);
+                el.innerText =
+                    prefix + currentValue.toLocaleString("ar-EG") + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        };
+
+        if (statsBar) {
+            const observer = new IntersectionObserver(
+                (entries, obs) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            document
+                                .querySelectorAll(".counter-stat")
+                                .forEach((counter) => animateCounter(counter));
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.4 }
+            );
+            observer.observe(statsBar);
+        }
+
+        // FAQ accordion
+        const accordionButtons = document.querySelectorAll(".accordion-button");
+        accordionButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const isExpanded = button.getAttribute("aria-expanded") === "true";
+                accordionButtons.forEach((btn) =>
+                    btn.setAttribute("aria-expanded", "false")
+                );
+                if (!isExpanded) {
+                    button.setAttribute("aria-expanded", "true");
+                }
+            });
+        });
+
+        // Swiper hero
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                const swiper = new Swiper(".hero-swiper-container", {
+                    loop: true,
+                    effect: "fade",
+                    fadeEffect: {
+                        crossFade: true,
+                    },
+                    autoplay: {
+                        delay: 4500,
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    a11y: {
+                        prevSlideMessage: "الشريحة السابقة",
+                        nextSlideMessage: "الشريحة التالية",
+                    },
+                });
+
+                const swiperContainer = document.querySelector(".hero-swiper-container");
+                if (swiperContainer) {
+                    swiperContainer.addEventListener("mouseenter", () => {
+                        swiper.autoplay.stop();
+                    });
+                    swiperContainer.addEventListener("mouseleave", () => {
+                        swiper.autoplay.start();
+                    });
+                }
+            } catch(e) {
+                console.error("Swiper initialization failed: ", e);
+            }
+
+            // --- GCLID CAPTURE & CONVERSION SCRIPT ---
+
+            let userGclid = null;
+            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBBDYmTjWacVVJ6NiFKqQxdwCo7lDOZIwSQL7VjW8NJjICvwesTbOkwvASvy6-8nGZ2A/exec'; // لا تنسى استبدال هذا
+
+            // 1. Function to parse GCLID from URL on page load
+            function getGclid() {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const gclid = urlParams.get('gclid');
+                    if (gclid) {
+                        console.log('GCLID Found:', gclid);
+                        return gclid;
+                    }
+                } catch (e) {
+                    console.error('Error parsing GCLID:', e);
+                }
+                return null;
+            }
+            // Store GCLID in a global variable
+            userGclid = getGclid();
+
+            // 2. Helper function to send conversion data to Google Sheet
+            async function sendConversionToSheet(conversionData) {
+                if (GOOGLE_APP_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzBBDYmTjWacVVJ6NiFKqQxdwCo7lDOZIwSQL7VjW8NJjICvwesTbOkwvASvy6-8nGZ2A/exec') {
+                    console.warn('Google App Script URL is not set. Cannot send conversion.');
+                    return;
+                }
+                
+                // Add GCLID to all conversion data
+                conversionData.gclid = userGclid;
+                conversionData.timestamp = new Date().toISOString();
+
+                try {
+                    await fetch(GOOGLE_APP_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        cache: 'no-cache',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(conversionData)
+                    });
+                    console.log('Conversion data sent:', conversionData.conversionType);
+                } catch (error) {
+                    console.error('Error sending conversion data to Google Sheet:', error);
+                }
+            }
+
+            // --- END GCLID SCRIPT ---
+
+
+            // Call Confirmation Modal Logic
+            const callModal = document.getElementById('call-modal');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const modalStep1 = document.getElementById('modal-step-1');
+            const modalStep2 = document.getElementById('modal-step-2');
+            const nextBtn = document.getElementById('modal-next-btn');
+            const backBtn = document.getElementById('modal-back-btn');
+            const cancelBtn1 = document.getElementById('modal-cancel-btn-1');
+            const callTriggers = document.querySelectorAll('.js-confirm-call');
+
+            const openCallModal = () => {
+                if (callModal && modalStep1 && modalStep2) {
+                    callModal.classList.remove('hidden');
+                    modalStep1.classList.remove('hidden');
+                    modalStep2.classList.add('hidden');
+                }
+            };
+
+            const closeCallModal = () => {
+                if (callModal) {
+                    callModal.classList.add('hidden');
+                }
+            };
+
+            const goToStep2 = () => {
+                if (modalStep1 && modalStep2) {
+                    modalStep1.classList.add('hidden');
+                    modalStep2.classList.remove('hidden');
+                }
+            };
+            
+            const goToStep1 = () => {
+                if (modalStep1 && modalStep2) {
+                    modalStep1.classList.remove('hidden');
+                    modalStep2.classList.add('hidden');
+                }
+            };
+
+            callTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // --- GCLID Conversion (Trigger 2a: Modal Call) ---
+                    const conversionData = {
+                        conversionType: 'Call Click (Modal)',
+                        phone: '01068224441' // Phone number from this link
+                    };
+                    sendConversionToSheet(conversionData);
+                    // --- End GCLID ---
+
+                    openCallModal();
+                });
+            });
+
+            if (modalBackdrop) modalBackdrop.addEventListener('click', closeCallModal);
+            if (cancelBtn1) cancelBtn1.addEventListener('click', closeCallModal);
+            if (nextBtn) nextBtn.addEventListener('click', goToStep2);
+            if (backBtn) backBtn.addEventListener('click', goToStep1);
+
+            // Quote Form Modal Logic
+            const formModal = document.getElementById('form-modal');
+            const formBackdrop = document.getElementById('form-modal-backdrop');
+            const closeFormBtn = document.getElementById('close-form-modal-btn');
+            const formTriggers = document.querySelectorAll('.js-open-form'); // Changed class to avoid conflict
+            const quoteForm = document.getElementById('quote-form');
+            const formSuccessMessage = document.getElementById('form-success-message');
+
+            // --- GCLID Conversion (Trigger 2b: Verified Call Link) ---
+            // We need to add the listener here, as the element exists in the DOM
+            const verifiedCallLink = document.querySelector('#verified-call-prompt a');
+            if (verifiedCallLink) {
+                verifiedCallLink.addEventListener('click', () => {
+                    // This click is a high-intent conversion
+                    const conversionData = {
+                        conversionType: 'Call Click (Verified)',
+                        phone: '01068224441' // Phone number from this link
+                    };
+                    sendConversionToSheet(conversionData);
+                    // No e.preventDefault() needed, let the 'tel:' link work
+                });
+            }
+            // --- End GCLID ---
+
+            const openFormModal = () => {
+                if (formModal && quoteForm && formSuccessMessage) {
+                    formModal.classList.remove('hidden');
+                    quoteForm.classList.remove('hidden'); // Show form
+                    formSuccessMessage.classList.add('hidden'); // Hide success msg
+                }
+            };
+
+            const closeFormModal = () => {
+                if (formModal) {
+                    formModal.classList.add('hidden');
+                }
+            };
+            
+            const showFormSuccess = () => {
+                 if (quoteForm && formSuccessMessage) {
+                    quoteForm.classList.add('hidden');
+                    formSuccessMessage.classList.remove('hidden');
+                    
+                    // Automatically close modal after 3.5 seconds
+                    setTimeout(() => {
+                        closeFormModal();
+                        // Reset form for next time
+                        quoteForm.reset();
+                        document.getElementById('verification-container').classList.add('hidden');
+                        document.getElementById('verified-call-prompt').classList.add('hidden'); // إخفاء رابط الاتصال عند الإغلاق
+                        document.getElementById('submit-quote-btn').disabled = true;
+                        document.getElementById('submit-quote-btn').innerText = 'إرسال الطلب (برجاء تأكيد الرقم أولاً)';
+                        document.getElementById('form-phone').disabled = false;
+                        document.getElementById('send-code-btn').disabled = false;
+                        document.getElementById('send-code-btn').innerText = 'إرسال الكود';
+                    }, 3500);
+                 }
+            };
+
+            // Attach listener to all triggers
+            formTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openFormModal(); // Call the new function
+                });
+            });
+
+            // Listeners for closing the modal
+            if (formBackdrop) formBackdrop.addEventListener('click', closeFormModal);
+            if (closeFormBtn) closeFormBtn.addEventListener('click', closeFormModal);
+            
+            
+            // ---  WhatsApp Verification & Form Submission Logic ---
+
+            const ULTRAMSG_INSTANCE = 'instance150609';
+            const ULTRAMSG_TOKEN = 'dawjp3uvgtursbx1';
+            const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
+            
+            // --- (Google URL is now defined above) ---
+            // const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBBDYmTjWacVVJ6NiFKqQxdwCo7lDOZIwSQL7VjW8NJjICvwesTbOkwvASvy6-8nGZ2A/exec'; 
+
+            let isPhoneVerified = false;
+            let generatedCode = null;
+
+            const sendCodeBtn = document.getElementById('send-code-btn');
+            const verifyCodeBtn = document.getElementById('verify-code-btn');
+            const phoneInput = document.getElementById('form-phone');
+            const verificationContainer = document.getElementById('verification-container');
+            const verificationCodeInput = document.getElementById('verification-code');
+            const verificationStatus = document.getElementById('verification-status');
+            const submitBtn = document.getElementById('submit-quote-btn');
+            const formMessage = document.getElementById('form-message');
+
+            sendCodeBtn.addEventListener('click', async () => {
+                const phone = phoneInput.value;
+                // Simple validation for Egyptian numbers (e.g., 01xxxxxxxxx or +201xxxxxxxxx)
+                let formattedPhone = phone.startsWith('01') ? `2${phone}` : phone;
+                if (!formattedPhone.match(/^(201|01)\d{9}$/)) {
+                     if(phone.startsWith('+')) formattedPhone = phone.substring(1);
+                     if (!formattedPhone.match(/^201\d{9}$/)) {
+                        verificationStatus.textContent = 'الرجاء إدخال رقم واتساب مصري صحيح (01xxxxxxxxx).';
+                        verificationStatus.classList.add('text-red-500');
+                        verificationStatus.classList.remove('text-green-500');
+                        return;
+                     }
+                }
+                
+                // Use +20 format for API
+                if(formattedPhone.startsWith('01')) formattedPhone = `2${formattedPhone}`;
+
+                sendCodeBtn.disabled = true;
+                sendCodeBtn.innerText = '...جاري';
+                verificationStatus.textContent = 'جاري إرسال الكود...';
+                verificationStatus.classList.remove('text-red-500', 'text-green-500');
+
+                generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+                const messageBody = `كود التحقق الخاص بك لشركة الحكمة هو: ${generatedCode}`;
+
+                try {
+                    const response = await fetch(ULTRAMSG_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            token: ULTRAMSG_TOKEN,
+                            to: formattedPhone,
+                            body: messageBody
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.sent === "true" || (result.status && result.status === "success")) {
+                        verificationContainer.classList.remove('hidden');
+                        phoneInput.disabled = true; // Lock phone number
+                        verificationStatus.textContent = 'تم إرسال الكود بنجاح. برجاء التحقق.';
+                        verificationStatus.classList.add('text-green-500');
+                        sendCodeBtn.innerText = 'تم الإرسال';
+                    } else {
+                        throw new Error(result.error || 'Failed to send message');
+                    }
+
+                } catch (error) {
+                    console.error('Error sending WhatsApp message:', error);
+                    verificationStatus.textContent = 'فشل إرسال الكود. تأكد من الرقم وحاول مرة أخرى.';
+                    verificationStatus.classList.add('text-red-500');
+                    sendCodeBtn.disabled = false;
+                    sendCodeBtn.innerText = 'إرسال الكود';
+                    generatedCode = null; // Reset code
+                }
+            });
+
+            verifyCodeBtn.addEventListener('click', () => {
+                const enteredCode = verificationCodeInput.value;
+                if (enteredCode === generatedCode) {
+                    isPhoneVerified = true;
+                    verificationStatus.textContent = 'تم تأكيد الرقم بنجاح!';
+                    verificationStatus.classList.add('text-green-500');
+                    verificationStatus.classList.remove('text-red-500');
+                    verifyCodeBtn.disabled = true;
+                    verificationCodeInput.disabled = true;
+                    submitBtn.disabled = false; // Enable submit button
+                    submitBtn.innerText = 'إرسال الطلب';
+                    formMessage.classList.add('hidden'); // Hide any previous errors
+                    
+                    // --- إضافة ---
+                    // إظهار رابط الاتصال المباشر بعد التحقق
+                    document.getElementById('verified-call-prompt').classList.remove('hidden');
+                    // --- نهاية الإضافة ---
+
+                } else {
+                    isPhoneVerified = false;
+                    verificationStatus.textContent = 'الكود غير صحيح. حاول مرة أخرى.';
+                    verificationStatus.classList.add('text-red-500');
+                }
+            });
+
+            // Listener for form submission
+            if (quoteForm) {
+                quoteForm.addEventListener('submit', async (e) => {
+                    e.preventDefault(); 
+                    
+                    if (!isPhoneVerified) {
+                        formMessage.textContent = 'الرجاء تأكيد رقم الهاتف أولاً.';
+                        formMessage.classList.add('text-red-500');
+                        formMessage.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    if (GOOGLE_APP_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
+                        formMessage.textContent = 'خطأ: لم يتم إعداد رابط Google Sheet. يرجى مراجعة المطور.';
+                        formMessage.classList.add('text-red-500');
+                        formMessage.classList.remove('hidden');
+                        return;
+                    }
+
+                    // Show loading state on submit button
+                    const originalBtnText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = 'جاري الإرسال...';
+                    submitBtn.disabled = true;
+                    formMessage.classList.add('hidden');
+
+
+                    // 1. Collect form data
+                    const formData = {
+                        // --- GCLID Conversion (Trigger 1: Form Submit) ---
+                        conversionType: 'Form Submit',
+                        // gclid: userGclid, // GCLID is added by sendConversionToSheet
+                        // --- End GCLID ---
+
+                        name: document.getElementById('form-name').value,
+                        phone: document.getElementById('form-phone').value,
+                        from: document.getElementById('form-from').value,
+                        to: document.getElementById('form-to').value,
+                        rooms: document.getElementById('form-rooms').value,
+                        type: document.getElementById('form-type').value,
+                        floor_from: document.getElementById('form-floor-from').value,
+                        floor_to: document.getElementById('form-floor-to').value,
+                        elevator_from: document.querySelector('input[name="elevator_from"]:checked')?.value || 'لا',
+                        elevator_to: document.querySelector('input[name="elevator_to"]:checked')?.value || 'لا',
+                        details: document.getElementById('form-details').value
+                    };
+
+                    // 2. Send data to Google Sheet (using the new helper function)
+                    try {
+                        await sendConversionToSheet(formData);
+                        
+                        // 3. Show original success message
+                        showFormSuccess();
+
+                    } catch (error) {
+                        console.error('Error sending data to Google Sheet:', error);
+                        formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.';
+                        formMessage.classList.add('text-red-500');
+                        formMessage.classList.remove('hidden');
+                        submitBtn.innerHTML = originalBtnText; // Restore button
+                        submitBtn.disabled = false; // Re-enable
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -57,6 +57,9 @@
                     borderRadius: {
                         xl2: '1.25rem',
                     },
+                    animation: {
+                        pulse: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
                 },
             },
         };
@@ -1602,146 +1605,185 @@
 
             <!-- Modal Body -->
             <div class="p-4 md:p-6">
-                <!-- Form -->
-                <!-- --- تعديل: تم تغيير ترتيب الحقول --- -->
-                <form id="quote-form" class="space-y-4 text-sm">
-                    <!-- حقل الاسم (أصبح بعرض كامل) -->
-                    <div>
-                         <input
-                            type="text"
-                            id="form-name"
-                            placeholder="الاسم بالكامل *"
-                            required
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
+                <!-- --- تعديل: إضافة شريط التقدم --- -->
+                <!-- Progress Bar -->
+                <div class="mb-4">
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-brand-primary h-2.5 rounded-full transition-all duration-300" style="width: 25%"></div>
                     </div>
-                    
-                    <!-- حقل الهاتف وزر إرسال الكود -->
-                    <div class="flex items-center gap-2">
-                        <input
-                            type="tel"
-                            id="form-phone"
-                            placeholder="رقم الهاتف (واتساب) *"
-                            required
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
-                        <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
-                            إرسال الكود
-                        </button>
-                    </div>
-                    <!-- --- نهاية التعديل --- -->
+                    <div id="step-title" class="text-center text-sm font-semibold text-brand-text mt-2">الخطوة 1 من 4: المعلومات الأساسية</div>
+                </div>
+                <!-- --- نهاية الإضافة --- -->
 
-                    <!-- حقل كود التحقق (مخفي مبدئيًا) -->
-                    <div id="verification-container" class="hidden space-y-2">
-                        <p class="text-xs text-brand-muted">تم إرسال كود التحقق إلى رقم الواتساب الخاص بك.</p>
-                        <div class="flex items-center gap-2">
+
+                <!-- Form -->
+                <!-- --- تعديل: تم تقسيم الفورم إلى خطوات --- -->
+                <form id="quote-form" class="space-y-4 text-sm">
+                    
+                    <!-- Step 1: Basic Info -->
+                    <div id="form-step-1" class="space-y-4">
+                        <div>
                             <input
                                 type="text"
-                                id="verification-code"
-                                placeholder="أدخل كود التحقق"
+                                id="form-name"
+                                placeholder="الاسم بالكامل *"
+                                required
                                 class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
                             />
-                            <button type="button" id="verify-code-btn" class="flex-shrink-0 px-4 py-3 rounded-xl bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600">
-                                تأكيد
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input
+                                type="text"
+                                id="form-from"
+                                placeholder="النقل من (المنطقة) *"
+                                required
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                            <input
+                                type="text"
+                                id="form-to"
+                                placeholder="النقل إلى (المنطقة) *"
+                                required
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                        </div>
+                        <div class="flex justify-end pt-2">
+                            <button type="button" id="next-btn-1" class="btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold py-2.5 px-6 rounded-xl text-sm">التالي</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Move Details -->
+                    <div id="form-step-2" class="hidden space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <select id="form-rooms" class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text" required>
+                                <option value="">عدد الغرف؟ *</option>
+                                <option value="1">غرفة واحدة</option>
+                                <option value="2">غرفتين</option>
+                                <option value="3">3 غرف</option>
+                                <option value="4">4 غرف</option>
+                                <option value="5+">5 غرف أو أكثر</option>
+                            </select>
+                            <select id="form-type" class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text" required>
+                                <option value="">نوع المكان؟ *</option>
+                                <option value="شقة">شقة</option>
+                                <option value="فيلا">فيلا</option>
+                                <option value="مكتب">مكتب/شركة</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           <input
+                                type="number"
+                                id="form-floor-from"
+                                placeholder="الدور الحالي؟"
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                             <input
+                                type="number"
+                                id="form-floor-to"
+                                placeholder="الدور الجديد؟"
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                        </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
+                                <label for="elevator_from" class="text-brand-muted">مصعد (الحالي)؟</label>
+                                <input type="radio" id="elevator_from_yes" name="elevator_from" value="نعم">
+                                <label for="elevator_from_yes">نعم</label>
+                                <input type="radio" id="elevator_from_no" name="elevator_from" value="لا" class="mr-2" checked>
+                                <label for="elevator_from_no">لا</label>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
+                                <label for="elevator_to" class="text-brand-muted">مصعد (الجديد)؟</label>
+                                <input type="radio" id="elevator_to_yes" name="elevator_to" value="نعم">
+                                <label for="elevator_to_yes">نعم</label>
+                                <input type="radio" id="elevator_to_no" name="elevator_to" value="لا" class="mr-2" checked>
+                                <label for="elevator_to_no">لا</label>
+                            </div>
+                        </div>
+                        <textarea
+                            id="form-details"
+                            placeholder="أي تفاصيل إضافية؟ (مثل: ونش، فك وتركيب، تغليف...)"
+                            class="w-full p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text min-h-[80px]"
+                        ></textarea>
+                        <div class="flex justify-between pt-2">
+                            <button type="button" id="prev-btn-2" class="bg-slate-100 text-slate-700 font-semibold py-2.5 px-6 rounded-xl text-sm hover:bg-slate-200">السابق</button>
+                            <button type="button" id="next-btn-2" class="btn-primary bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold py-2.5 px-6 rounded-xl text-sm">التالي</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Phone Verification -->
+                    <div id="form-step-3" class="hidden space-y-4">
+                        <p class="text-sm text-brand-muted">الخطوة قبل الأخيرة: تأكيد رقم الهاتف لضمان جدية الطلب.</p>
+                        <!-- حقل الهاتف وزر إرسال الكود -->
+                        <div class="flex items-center gap-2">
+                            <input
+                                type="tel"
+                                id="form-phone"
+                                placeholder="رقم الهاتف (واتساب) *"
+                                required
+                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                            />
+                            <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
+                                إرسال الكود
                             </button>
                         </div>
-                         <div id="verification-status" class="text-xs"></div>
-                    </div>
-
-                    <!-- رابط الاتصال بعد التحقق -->
-                    <div id="verified-call-prompt" class="hidden pt-2 text-center">
-                        <p class="text-xs text-brand-muted mb-2">تم تأكيد رقمك! يمكنك الآن إرسال الطلب، أو</p>
-                        <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
-                            <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
-                            <span>الاتصال المباشر: 01068224441</span>
-                        </a>
-                    </div>
-
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input
-                            type="text"
-                            id="form-from"
-                            placeholder="النقل من (المنطقة) *"
-                            required
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
-                        <input
-                            type="text"
-                            id="form-to"
-                            placeholder="النقل إلى (المنطقة) *"
-                            required
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <select id="form-rooms" class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text" required>
-                            <option value="">عدد الغرف؟ *</option>
-                            <option value="1">غرفة واحدة</option>
-                            <option value="2">غرفتين</option>
-                            <option value="3">3 غرف</option>
-                            <option value="4">4 غرف</option>
-                            <option value="5+">5 غرف أو أكثر</option>
-                        </select>
-                        <select id="form-type" class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text" required>
-                            <option value="">نوع المكان؟ *</option>
-                            <option value="شقة">شقة</option>
-                            <option value="فيلا">فيلا</option>
-                            <option value="مكتب">مكتب/شركة</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                       <input
-                            type="number"
-                            id="form-floor-from"
-                            placeholder="الدور الحالي؟"
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
-                         <input
-                            type="number"
-                            id="form-floor-to"
-                            placeholder="الدور الجديد؟"
-                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                        />
-                    </div>
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
-                            <label for="elevator_from" class="text-brand-muted">مصعد (الحالي)؟</label>
-                            <input type="radio" id="elevator_from_yes" name="elevator_from" value="نعم">
-                            <label for="elevator_from_yes">نعم</label>
-                            <input type="radio" id="elevator_from_no" name="elevator_from" value="لا" class="mr-2" checked>
-                            <label for="elevator_from_no">لا</label>
+                        <!-- حقل كود التحقق (مخفي مبدئيًا) -->
+                        <div id="verification-container" class="hidden space-y-2">
+                            <p class="text-xs text-brand-muted">تم إرسال كود التحقق إلى رقم الواتساب الخاص بك.</p>
+                            <div class="flex items-center gap-2">
+                                <input
+                                    type="text"
+                                    id="verification-code"
+                                    placeholder="أدخل كود التحقق"
+                                    class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                                />
+                                <button type="button" id="verify-code-btn" class="flex-shrink-0 px-4 py-3 rounded-xl bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600">
+                                    تأكيد
+                                </button>
+                            </div>
+                            <div id="verification-status" class="text-xs"></div>
                         </div>
-                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200 p-3">
-                            <label for="elevator_to" class="text-brand-muted">مصعد (الجديد)؟</label>
-                            <input type="radio" id="elevator_to_yes" name="elevator_to" value="نعم">
-                            <label for="elevator_to_yes">نعم</label>
-                            <input type="radio" id="elevator_to_no" name="elevator_to" value="لا" class="mr-2" checked>
-                            <label for="elevator_to_no">لا</label>
+                        <!-- رابط الاتصال بعد التحقق -->
+                        <div id="verified-call-prompt" class="hidden pt-2 text-center">
+                            <p class="text-xs text-brand-muted mb-2">تم تأكيد رقمك! يمكنك الآن الانتقال للخطوة الأخيرة.</p>
+                            <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
+                                <i class="fa-solid fa-phone -scale-x-100 text-xs"></i>
+                                <span>أو الاتصال المباشر: 01068224441</span>
+                            </a>
+                        </div>
+                        <div class="flex justify-between pt-2">
+                            <button type="button" id="prev-btn-3" class="bg-slate-100 text-slate-700 font-semibold py-2.5 px-6 rounded-xl text-sm hover:bg-slate-200">السابق</button>
+                            <!-- زر التالي يتم تفعيله عند التحقق -->
                         </div>
                     </div>
-                    <textarea
-                        id="form-details"
-                        placeholder="أي تفاصيل إضافية؟ (مثل: ونش، فك وتركيب، تغليف...)"
-                        class="w-full p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text min-h-[80px]"
-                    ></textarea>
 
-                    <!-- منطقة رسائل الخطأ أو النجاح -->
-                    <div id="form-message" class="text-xs text-center p-2 hidden"></div>
+                    <!-- Step 4: Submit -->
+                    <div id="form-step-4" class="hidden space-y-4">
+                        <div class="text-center p-4 bg-emerald-50 rounded-xl">
+                            <p class="font-semibold text-emerald-700">ممتاز! تم التحقق من رقمك.</p>
+                            <p class="text-sm text-emerald-600">أنت الآن جاهز لإرسال طلبك. اضغط على الزر بالأسفل.</p>
+                        </div>
+                        
+                        <!-- منطقة رسائل الخطأ أو النجاح -->
+                        <div id="form-message" class="text-xs text-center p-2 hidden"></div>
+                        
+                        <button
+                            type="submit"
+                            id="submit-quote-btn"
+                            class="btn-primary w-full bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold p-3.5 rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed animate-pulse"
+                            disabled 
+                        >
+                            إرسال الطلب
+                        </button>
+                        <div class="flex justify-start">
+                            <button type="button" id="prev-btn-4" class="bg-slate-100 text-slate-700 font-semibold py-2.5 px-6 rounded-xl text-sm hover:bg-slate-200">السابق</button>
+                        </div>
+                    </div>
 
-                    <!-- --- تعديل: تم إضافة 'hidden' --- -->
-                    <button
-                        type="submit"
-                        id="submit-quote-btn"
-                        class="btn-primary w-full bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold p-3.5 rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed hidden"
-                        disabled 
-                    >
-                        إرسال الطلب (برجاء تأكيد الرقم أولاً)
-                    </button>
                     <!-- --- نهاية التعديل --- -->
                 </form>
 
                 <!-- Success Message -->
-                <!-- --- تعديل: تم تغيير النص وإضافة مكان لرقم الهاتف --- -->
                 <div id="form-success-message" class="hidden text-center py-10">
                     <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto mb-4">
                         <i class="fa-solid fa-circle-check"></i>
@@ -1752,7 +1794,6 @@
                     </p>
                     <p id="success-phone-message" class="text-brand-muted text-sm font-semibold leading-relaxed mt-2"></p>
                 </div>
-                <!-- --- نهاية التعديل --- -->
             </div>
         </div>
     </div>
@@ -1939,7 +1980,7 @@
             const formModal = document.getElementById('form-modal');
             const formBackdrop = document.getElementById('form-modal-backdrop');
             const closeFormBtn = document.getElementById('close-form-modal-btn');
-            const formTriggers = document.querySelectorAll('.js-open-form'); // Changed class to avoid conflict
+            const formTriggers = document.querySelectorAll('.js-open-form');
             const quoteForm = document.getElementById('quote-form');
             const formSuccessMessage = document.getElementById('form-success-message');
 
@@ -1957,45 +1998,176 @@
                 }
             };
             
+            // ---  WhatsApp Verification & Form Submission Logic ---
+
+            const ULTRAMSG_INSTANCE = 'instance150609';
+            const ULTRAMSG_TOKEN = 'dawjp3uvgtursbx1';
+            const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
+            
+            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; 
+
+            let isPhoneVerified = false;
+            let generatedCode = null;
+            let currentStep = 1; // --- NEW ---
+            const stepTitles = [ // --- NEW ---
+                "الخطوة 1 من 4: المعلومات الأساسية",
+                "الخطوة 2 من 4: تفاصيل النقل",
+                "الخطوة 3 من 4: تأكيد الهاتف",
+                "الخطوة 4 من 4: إرسال الطلب"
+            ];
+
+            const sendCodeBtn = document.getElementById('send-code-btn');
+            const verifyCodeBtn = document.getElementById('verify-code-btn');
+            const phoneInput = document.getElementById('form-phone');
+            const verificationContainer = document.getElementById('verification-container');
+            const verificationCodeInput = document.getElementById('verification-code');
+            const verificationStatus = document.getElementById('verification-status');
+            const verifiedCallPrompt = document.getElementById('verified-call-prompt');
+            const submitBtn = document.getElementById('submit-quote-btn');
+            const formMessage = document.getElementById('form-message');
+
+            // --- NEW: Step Navigation Elements ---
+            const nextBtn1 = document.getElementById('next-btn-1');
+            const prevBtn2 = document.getElementById('prev-btn-2');
+            const nextBtn2 = document.getElementById('next-btn-2');
+            const prevBtn3 = document.getElementById('prev-btn-3');
+            const prevBtn4 = document.getElementById('prev-btn-4');
+            const progressBar = document.getElementById('progress-bar');
+            const stepTitleEl = document.getElementById('step-title');
+
+            // --- NEW: Step Navigation Function ---
+            const showStep = (stepNumber) => {
+                // Hide all steps
+                document.getElementById('form-step-1').classList.add('hidden');
+                document.getElementById('form-step-2').classList.add('hidden');
+                document.getElementById('form-step-3').classList.add('hidden');
+                document.getElementById('form-step-4').classList.add('hidden');
+
+                // Show the correct step
+                const currentStepEl = document.getElementById('form-step-' + stepNumber);
+                if (currentStepEl) {
+                    currentStepEl.classList.remove('hidden');
+                }
+
+                // Update progress bar
+                const progressPercentage = (stepNumber / 4) * 100;
+                if (progressBar) {
+                    progressBar.style.width = progressPercentage + '%';
+                }
+                if (stepTitleEl) {
+                    stepTitleEl.textContent = stepTitles[stepNumber - 1];
+                }
+
+                currentStep = stepNumber;
+            };
+
+            // --- NEW: Validation Function ---
+            const validateStep = (stepNumber) => {
+                let isValid = true;
+                let errorMsg = "";
+                
+                // --- منطقة رسائل الخطأ العامة للخطوات ---
+                const stepFormMessage = document.getElementById('form-message');
+                
+                if (stepNumber === 1) {
+                    const name = document.getElementById('form-name').value;
+                    const from = document.getElementById('form-from').value;
+                    const to = document.getElementById('form-to').value;
+                    if (!name || !from || !to) {
+                        isValid = false;
+                        errorMsg = "الرجاء ملء جميع الحقول: الاسم، النقل من، والنقل إلى.";
+                    }
+                }
+                
+                if (stepNumber === 2) {
+                    const rooms = document.getElementById('form-rooms').value;
+                    const type = document.getElementById('form-type').value;
+                    if (!rooms || !type) {
+                        isValid = false;
+                        errorMsg = "الرجاء اختيار عدد الغرف ونوع المكان.";
+                    }
+                }
+                
+                // Show/hide error message
+                if (stepFormMessage) {
+                    if (!isValid) {
+                        stepFormMessage.textContent = errorMsg;
+                        stepFormMessage.classList.add('text-red-500');
+                        stepFormMessage.classList.remove('hidden');
+                        // إظهار الرسالة في الخطوة الحالية
+                        document.getElementById('form-step-' + stepNumber).appendChild(stepFormMessage);
+                    } else {
+                        stepFormMessage.classList.add('hidden');
+                    }
+                }
+                
+                return isValid;
+            };
+
+            // --- NEW: Step Navigation Listeners ---
+            if (nextBtn1) nextBtn1.addEventListener('click', () => {
+                if (validateStep(1)) {
+                    showStep(2);
+                }
+            });
+            if (prevBtn2) prevBtn2.addEventListener('click', () => showStep(1));
+            if (nextBtn2) nextBtn2.addEventListener('click', () => {
+                if (validateStep(2)) {
+                    showStep(3);
+                }
+            });
+            if (prevBtn3) prevBtn3.addEventListener('click', () => showStep(2));
+            if (prevBtn4) prevBtn4.addEventListener('click', () => showStep(3));
+
+            // --- MODIFIED: showFormSuccess ---
             const showFormSuccess = () => {
                  if (quoteForm && formSuccessMessage) {
                     quoteForm.classList.add('hidden');
                     formSuccessMessage.classList.remove('hidden');
                     
-                    // --- تعديل: إظهار رقم الهاتف ---
                     const phone = document.getElementById('form-phone').value;
                     const successPhoneEl = document.getElementById('success-phone-message');
                     if (phone && successPhoneEl) {
                         successPhoneEl.textContent = `تم استلام طلبك بنجاح للرقم: ${phone}`;
                     }
-                    // --- نهاية التعديل ---
 
                     // Automatically close modal after 4 seconds
                     setTimeout(() => {
                         closeFormModal();
-                        // Reset form for next time
-                        quoteForm.reset();
-                        document.getElementById('verification-container').classList.add('hidden');
-                        document.getElementById('verified-call-prompt').classList.add('hidden');
                         
-                        // --- تعديل: إعادة إخفاء زر الإرسال وإلغاء الحركة ---
-                        const submitBtn = document.getElementById('submit-quote-btn');
-                        submitBtn.classList.add('hidden'); // إخفاء
-                        submitBtn.classList.remove('animate-pulse'); // إزالة الحركة
+                        // --- NEW: Full Reset Logic ---
+                        quoteForm.reset(); // Reset all form fields
+                        formSuccessMessage.classList.add('hidden'); // Hide success msg
+                        quoteForm.classList.remove('hidden'); // Show form again
+                        
+                        // Reset verification state
+                        isPhoneVerified = false;
+                        generatedCode = null;
+                        phoneInput.disabled = false;
+                        sendCodeBtn.disabled = false;
+                        sendCodeBtn.innerText = 'إرسال الكود';
+                        verificationContainer.classList.add('hidden');
+                        verificationCodeInput.value = '';
+                        verificationCodeInput.disabled = false;
+                        verifyCodeBtn.disabled = false;
+                        verificationStatus.textContent = '';
+                        verificationStatus.classList.remove('text-green-500', 'text-red-500');
+                        verifiedCallPrompt.classList.add('hidden');
+                        
+                        // Reset submit button
                         submitBtn.disabled = true;
-                        submitBtn.innerText = 'إرسال الطلب (برجاء تأكيد الرقم أولاً)';
-                        // --- نهاية التعديل ---
-
-                        document.getElementById('form-phone').disabled = false;
-                        document.getElementById('send-code-btn').disabled = false;
-                        document.getElementById('send-code-btn').innerText = 'إرسال الكود';
-
-                        // --- تعديل: مسح نص الهاتف عند الإغلاق ---
+                        submitBtn.innerText = 'إرسال الطلب';
+                        submitBtn.classList.remove('animate-pulse');
+                        
+                        // Reset steps
+                        showStep(1);
+                        
                         if (successPhoneEl) {
                             successPhoneEl.textContent = '';
                         }
-                        // --- نهاية التعديل ---
-                    }, 4000); // تم التغيير إلى 4 ثواني
+                        // --- End of Full Reset Logic ---
+
+                    }, 4000);
                  }
             };
 
@@ -2003,7 +2175,7 @@
             formTriggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
                     e.preventDefault();
-                    openFormModal(); // Call the new function
+                    openFormModal();
                 });
             });
 
@@ -2012,30 +2184,9 @@
             if (closeFormBtn) closeFormBtn.addEventListener('click', closeFormModal);
             
             
-            // ---  WhatsApp Verification & Form Submission Logic ---
-
-            const ULTRAMSG_INSTANCE = 'instance150609';
-            const ULTRAMSG_TOKEN = 'dawjp3uvgtursbx1';
-            const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
-            
-            // --- هام جداً: استبدل هذا الرابط بالرابط الذي ستحصل عليه من Google Apps Script ---
-            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; 
-
-            let isPhoneVerified = false;
-            let generatedCode = null;
-
-            const sendCodeBtn = document.getElementById('send-code-btn');
-            const verifyCodeBtn = document.getElementById('verify-code-btn');
-            const phoneInput = document.getElementById('form-phone');
-            const verificationContainer = document.getElementById('verification-container');
-            const verificationCodeInput = document.getElementById('verification-code');
-            const verificationStatus = document.getElementById('verification-status');
-            const submitBtn = document.getElementById('submit-quote-btn');
-            const formMessage = document.getElementById('form-message');
-
+            // --- (sendCodeBtn listener is unchanged, logic is good) ---
             sendCodeBtn.addEventListener('click', async () => {
                 const phone = phoneInput.value;
-                // Simple validation for Egyptian numbers (e.g., 01xxxxxxxxx or +201xxxxxxxxx)
                 let formattedPhone = phone.startsWith('01') ? `2${phone}` : phone;
                 if (!formattedPhone.match(/^(201|01)\d{9}$/)) {
                      if(phone.startsWith('+')) formattedPhone = phone.substring(1);
@@ -2047,7 +2198,6 @@
                      }
                 }
                 
-                // Use +20 format for API
                 if(formattedPhone.startsWith('01')) formattedPhone = `2${formattedPhone}`;
 
                 sendCodeBtn.disabled = true;
@@ -2070,29 +2220,27 @@
                             body: messageBody
                         })
                     });
-
                     const result = await response.json();
-
                     if (result.sent === "true" || (result.status && result.status === "success")) {
                         verificationContainer.classList.remove('hidden');
-                        phoneInput.disabled = true; // Lock phone number
+                        phoneInput.disabled = true;
                         verificationStatus.textContent = 'تم إرسال الكود بنجاح. برجاء التحقق.';
                         verificationStatus.classList.add('text-green-500');
                         sendCodeBtn.innerText = 'تم الإرسال';
                     } else {
                         throw new Error(result.error || 'Failed to send message');
                     }
-
                 } catch (error) {
                     console.error('Error sending WhatsApp message:', error);
                     verificationStatus.textContent = 'فشل إرسال الكود. تأكد من الرقم وحاول مرة أخرى.';
                     verificationStatus.classList.add('text-red-500');
                     sendCodeBtn.disabled = false;
                     sendCodeBtn.innerText = 'إرسال الكود';
-                    generatedCode = null; // Reset code
+                    generatedCode = null;
                 }
             });
 
+            // --- MODIFIED: verifyCodeBtn listener ---
             verifyCodeBtn.addEventListener('click', () => {
                 const enteredCode = verificationCodeInput.value;
                 if (enteredCode === generatedCode) {
@@ -2102,20 +2250,18 @@
                     verificationStatus.classList.remove('text-red-500');
                     verifyCodeBtn.disabled = true;
                     verificationCodeInput.disabled = true;
-
-                    // --- تعديل: إخفاء حقل التحقق وإظهار زر الإرسال مع حركة ---
-                    verificationContainer.classList.add('hidden'); // 1. إخفاء حقل التحقق
                     
-                    submitBtn.disabled = false; // تفعيل زر الإرسال
-                    submitBtn.innerText = 'إرسال الطلب';
-                    submitBtn.classList.remove('hidden'); // 2. إظهار زر الإرسال
-                    submitBtn.classList.add('animate-pulse'); // 3. إضافة حركة (تأكد من وجود animate-pulse في Tailwind)
-                    // --- نهاية التعديل ---
-
-                    formMessage.classList.add('hidden'); // Hide any previous errors
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'إرسال الطلب الآن';
                     
-                    // إظهار رابط الاتصال المباشر بعد التحقق
+                    formMessage.classList.add('hidden');
+                    
                     document.getElementById('verified-call-prompt').classList.remove('hidden');
+
+                    // --- NEW: Automatically move to next step ---
+                    setTimeout(() => {
+                        showStep(4); // Move to the final submit step
+                    }, 1000); // Delay so user can read "success"
 
                 } else {
                     isPhoneVerified = false;
@@ -2124,15 +2270,16 @@
                 }
             });
 
-            // Listener for form submission
+            // --- (quoteForm submit listener is largely unchanged) ---
             if (quoteForm) {
                 quoteForm.addEventListener('submit', async (e) => {
                     e.preventDefault(); 
                     
                     if (!isPhoneVerified) {
-                        formMessage.textContent = 'الرجاء تأكيد رقم الهاتف أولاً.';
-                        formMessage.classList.add('text-red-500');
-                        formMessage.classList.remove('hidden');
+                        showStep(3); // Send user back to verification
+                        verificationStatus.textContent = 'الرجاء تأكيد رقم الهاتف أولاً.';
+                        verificationStatus.classList.add('text-red-500');
+                        verificationStatus.classList.remove('text-green-500');
                         return;
                     }
                     
@@ -2140,18 +2287,18 @@
                         formMessage.textContent = 'خطأ: لم يتم إعداد رابط Google Sheet. يرجى مراجعة المطور.';
                         formMessage.classList.add('text-red-500');
                         formMessage.classList.remove('hidden');
+                        // إظهار الرسالة في الخطوة 4
+                        document.getElementById('form-step-4').prepend(formMessage);
                         return;
                     }
 
-                    // Show loading state on submit button
                     const originalBtnText = submitBtn.innerHTML;
                     submitBtn.innerHTML = 'جاري الإرسال...';
                     submitBtn.disabled = true;
-                    submitBtn.classList.remove('animate-pulse'); // إيقاف الحركة أثناء الإرسال
+                    submitBtn.classList.remove('animate-pulse');
                     formMessage.classList.add('hidden');
 
-
-                    // 1. Collect form data
+                    // 1. Collect form data (all fields are in the same form)
                     const formData = {
                         name: document.getElementById('form-name').value,
                         phone: document.getElementById('form-phone').value,
@@ -2168,26 +2315,19 @@
 
                     // 2. Send data to Google Sheet
                     try {
-                        // We use a trick to send data to Apps Script without CORS issues
-                        // We create a temporary form and submit it
-                        // A more robust way is to enable CORS in Apps Script and use fetch POST
-                        // But for simplicity, we'll use a standard fetch POST and expect 'no-cors'
-                        
                         const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
                             method: 'POST',
-                            mode: 'no-cors', // Important for basic Apps Script Web App
+                            mode: 'no-cors',
                             cache: 'no-cache',
                             headers: {
                               'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify(formData) // Send data as JSON
+                            body: JSON.stringify(formData)
                         });
                         
-                        // Since mode is 'no-cors', we can't read the response.
-                        // We assume success if no network error was thrown.
                         console.log('Form data sent to Google Sheet (assumed success).');
                         
-                        // 3. Show original success message
+                        // 3. Show success message and start reset timer
                         showFormSuccess();
 
                     } catch (error) {
@@ -2195,12 +2335,49 @@
                         formMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.';
                         formMessage.classList.add('text-red-500');
                         formMessage.classList.remove('hidden');
-                        submitBtn.innerHTML = originalBtnText; // Restore button
-                        submitBtn.disabled = false; // Re-enable
-                        submitBtn.classList.add('animate-pulse'); // إعادة الحركة عند الفشل
+                        document.getElementById('form-step-4').prepend(formMessage);
+                        
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.add('animate-pulse');
                     }
                 });
             }
+
+            // --- NEW: Initialize step 1 on modal open ---
+            formTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // --- Reset form to step 1 every time it's opened ---
+                    if (quoteForm) {
+                         // (Full reset logic copied from showFormSuccess timeout)
+                        quoteForm.reset();
+                        formSuccessMessage.classList.add('hidden');
+                        quoteForm.classList.remove('hidden');
+                        isPhoneVerified = false;
+                        generatedCode = null;
+                        phoneInput.disabled = false;
+                        sendCodeBtn.disabled = false;
+                        sendCodeBtn.innerText = 'إرسال الكود';
+                        verificationContainer.classList.add('hidden');
+                        verificationCodeInput.value = '';
+                        verificationCodeInput.disabled = false;
+                        verifyCodeBtn.disabled = false;
+                        verificationStatus.textContent = '';
+                        verificationStatus.classList.remove('text-green-500', 'text-red-500');
+                        verifiedCallPrompt.classList.add('hidden');
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'إرسال الطلب';
+                        submitBtn.classList.remove('animate-pulse');
+                        formMessage.classList.add('hidden');
+                        showStep(1); // Start at step 1
+                    }
+                    openFormModal();
+                });
+            });
+            
+            // --- NEW: Initialize step 1 on load (fallback) ---
+            showStep(1);
 
         });
     </script>

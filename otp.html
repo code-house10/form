@@ -1603,8 +1603,10 @@
             <!-- Modal Body -->
             <div class="p-4 md:p-6">
                 <!-- Form -->
+                <!-- --- تعديل: تم تغيير ترتيب الحقول --- -->
                 <form id="quote-form" class="space-y-4 text-sm">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- حقل الاسم (أصبح بعرض كامل) -->
+                    <div>
                          <input
                             type="text"
                             id="form-name"
@@ -1612,24 +1614,23 @@
                             required
                             class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
                         />
-                         <!-- --- تعديل --- -->
-                         <!-- حقل الهاتف وزر إرسال الكود -->
-                        <div class="flex items-center gap-2">
-                            <input
-                                type="tel"
-                                id="form-phone"
-                                placeholder="رقم الهاتف (واتساب) *"
-                                required
-                                class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
-                            />
-                            <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
-                                إرسال الكود
-                            </button>
-                        </div>
-                         <!-- --- نهاية التعديل --- -->
                     </div>
+                    
+                    <!-- حقل الهاتف وزر إرسال الكود -->
+                    <div class="flex items-center gap-2">
+                        <input
+                            type="tel"
+                            id="form-phone"
+                            placeholder="رقم الهاتف (واتساب) *"
+                            required
+                            class="w-full p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text"
+                        />
+                        <button type="button" id="send-code-btn" class="flex-shrink-0 px-3 py-3 rounded-xl bg-brand-primary text-white text-xs font-semibold hover:bg-brand-secondary">
+                            إرسال الكود
+                        </button>
+                    </div>
+                    <!-- --- نهاية التعديل --- -->
 
-                    <!-- --- إضافة --- -->
                     <!-- حقل كود التحقق (مخفي مبدئيًا) -->
                     <div id="verification-container" class="hidden space-y-2">
                         <p class="text-xs text-brand-muted">تم إرسال كود التحقق إلى رقم الواتساب الخاص بك.</p>
@@ -1646,9 +1647,8 @@
                         </div>
                          <div id="verification-status" class="text-xs"></div>
                     </div>
-                    <!-- --- نهاية الإضافة --- -->
 
-                    <!-- --- إضافة: رابط الاتصال بعد التحقق --- -->
+                    <!-- رابط الاتصال بعد التحقق -->
                     <div id="verified-call-prompt" class="hidden pt-2 text-center">
                         <p class="text-xs text-brand-muted mb-2">تم تأكيد رقمك! يمكنك الآن إرسال الطلب، أو</p>
                         <a href="tel:01068224441" class="inline-flex items-center gap-2 justify-center font-semibold text-emerald-600 hover:text-emerald-700 text-sm">
@@ -1656,7 +1656,6 @@
                             <span>الاتصال المباشر: 01068224441</span>
                         </a>
                     </div>
-                    <!-- --- نهاية الإضافة --- -->
 
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input
@@ -1726,17 +1725,14 @@
                         class="w-full p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-brand-primary text-brand-text min-h-[80px]"
                     ></textarea>
 
-                    <!-- --- إضافة --- -->
                     <!-- منطقة رسائل الخطأ أو النجاح -->
                     <div id="form-message" class="text-xs text-center p-2 hidden"></div>
-                    <!-- --- نهاية الإضافة --- -->
 
-                    <!-- --- تعديل --- -->
-                    <!-- تم إضافة id و disabled -->
+                    <!-- --- تعديل: تم إضافة 'hidden' --- -->
                     <button
                         type="submit"
                         id="submit-quote-btn"
-                        class="btn-primary w-full bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold p-3.5 rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="btn-primary w-full bg-gradient-to-l from-brand-primary to-brand-secondary text-white font-semibold p-3.5 rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed hidden"
                         disabled 
                     >
                         إرسال الطلب (برجاء تأكيد الرقم أولاً)
@@ -1745,15 +1741,18 @@
                 </form>
 
                 <!-- Success Message -->
+                <!-- --- تعديل: تم تغيير النص وإضافة مكان لرقم الهاتف --- -->
                 <div id="form-success-message" class="hidden text-center py-10">
                     <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto mb-4">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-text mb-2">تم استلام طلبك</h3>
+                    <h3 class="text-xl font-bold text-brand-text mb-2">تم استلام طلبك بنجاح</h3>
                     <p class="text-brand-muted text-sm leading-relaxed">
                         شكرًا لك. سيقوم أحد ممثلينا بالتواصل معك قريبًا جدًا لتأكيد التفاصيل.
                     </p>
+                    <p id="success-phone-message" class="text-brand-muted text-sm font-semibold leading-relaxed mt-2"></p>
                 </div>
+                <!-- --- نهاية التعديل --- -->
             </div>
         </div>
     </div>
@@ -1963,19 +1962,40 @@
                     quoteForm.classList.add('hidden');
                     formSuccessMessage.classList.remove('hidden');
                     
-                    // Automatically close modal after 3.5 seconds
+                    // --- تعديل: إظهار رقم الهاتف ---
+                    const phone = document.getElementById('form-phone').value;
+                    const successPhoneEl = document.getElementById('success-phone-message');
+                    if (phone && successPhoneEl) {
+                        successPhoneEl.textContent = `تم استلام طلبك بنجاح للرقم: ${phone}`;
+                    }
+                    // --- نهاية التعديل ---
+
+                    // Automatically close modal after 4 seconds
                     setTimeout(() => {
                         closeFormModal();
                         // Reset form for next time
                         quoteForm.reset();
                         document.getElementById('verification-container').classList.add('hidden');
-                        document.getElementById('verified-call-prompt').classList.add('hidden'); // إخفاء رابط الاتصال عند الإغلاق
-                        document.getElementById('submit-quote-btn').disabled = true;
-                        document.getElementById('submit-quote-btn').innerText = 'إرسال الطلب (برجاء تأكيد الرقم أولاً)';
+                        document.getElementById('verified-call-prompt').classList.add('hidden');
+                        
+                        // --- تعديل: إعادة إخفاء زر الإرسال وإلغاء الحركة ---
+                        const submitBtn = document.getElementById('submit-quote-btn');
+                        submitBtn.classList.add('hidden'); // إخفاء
+                        submitBtn.classList.remove('animate-pulse'); // إزالة الحركة
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'إرسال الطلب (برجاء تأكيد الرقم أولاً)';
+                        // --- نهاية التعديل ---
+
                         document.getElementById('form-phone').disabled = false;
                         document.getElementById('send-code-btn').disabled = false;
                         document.getElementById('send-code-btn').innerText = 'إرسال الكود';
-                    }, 3500);
+
+                        // --- تعديل: مسح نص الهاتف عند الإغلاق ---
+                        if (successPhoneEl) {
+                            successPhoneEl.textContent = '';
+                        }
+                        // --- نهاية التعديل ---
+                    }, 4000); // تم التغيير إلى 4 ثواني
                  }
             };
 
@@ -2082,14 +2102,20 @@
                     verificationStatus.classList.remove('text-red-500');
                     verifyCodeBtn.disabled = true;
                     verificationCodeInput.disabled = true;
-                    submitBtn.disabled = false; // Enable submit button
+
+                    // --- تعديل: إخفاء حقل التحقق وإظهار زر الإرسال مع حركة ---
+                    verificationContainer.classList.add('hidden'); // 1. إخفاء حقل التحقق
+                    
+                    submitBtn.disabled = false; // تفعيل زر الإرسال
                     submitBtn.innerText = 'إرسال الطلب';
+                    submitBtn.classList.remove('hidden'); // 2. إظهار زر الإرسال
+                    submitBtn.classList.add('animate-pulse'); // 3. إضافة حركة (تأكد من وجود animate-pulse في Tailwind)
+                    // --- نهاية التعديل ---
+
                     formMessage.classList.add('hidden'); // Hide any previous errors
                     
-                    // --- إضافة ---
                     // إظهار رابط الاتصال المباشر بعد التحقق
                     document.getElementById('verified-call-prompt').classList.remove('hidden');
-                    // --- نهاية الإضافة ---
 
                 } else {
                     isPhoneVerified = false;
@@ -2121,6 +2147,7 @@
                     const originalBtnText = submitBtn.innerHTML;
                     submitBtn.innerHTML = 'جاري الإرسال...';
                     submitBtn.disabled = true;
+                    submitBtn.classList.remove('animate-pulse'); // إيقاف الحركة أثناء الإرسال
                     formMessage.classList.add('hidden');
 
 
@@ -2170,6 +2197,7 @@
                         formMessage.classList.remove('hidden');
                         submitBtn.innerHTML = originalBtnText; // Restore button
                         submitBtn.disabled = false; // Re-enable
+                        submitBtn.classList.add('animate-pulse'); // إعادة الحركة عند الفشل
                     }
                 });
             }

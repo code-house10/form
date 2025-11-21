@@ -340,6 +340,13 @@
         .animate-pulse-scale {
             animation: pulse-scale 1.5s ease-in-out infinite;
         }
+        
+        /* Custom OTP Box style */
+        .otp-box {
+            background-color: #f0fdf4; /* Emerald 50 */
+            color: #065f46; /* Emerald 900 */
+            border: 2px solid #a7f3d0; /* Emerald 200 */
+        }
     </style>
 </head>
 <body class="bg-layout-bg">
@@ -1678,7 +1685,18 @@
                     </div>
 
                     <div class="flex flex-col items-center gap-4">
-                         <input
+                        <!-- OTP Code Display and Copy Button -->
+                        <div class="flex flex-col items-center gap-2 w-full max-w-sm">
+                            <div id="otp-display-box" class="otp-box w-full text-center text-3xl font-bold p-3 rounded-xl mb-2 hidden">
+                                <!-- Code will be injected here -->
+                            </div>
+                            <button type="button" id="copy-code-btn" class="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-700 font-semibold py-3 rounded-xl text-sm hover:bg-slate-200 transition-colors hidden">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>إنسخ الكود</span>
+                            </button>
+                        </div>
+                        
+                        <input
                             type="text"
                             id="verification-code"
                             placeholder="أدخل كود التحقق"
@@ -1968,7 +1986,10 @@
                     document.getElementById('form-phone-step1').disabled = false;
                     document.getElementById('send-code-btn-step1').innerText = 'تأكيد رقم الواتس والحصول على العرض';
                     document.getElementById('send-code-btn-step1').disabled = false;
-                    // document.getElementById('quote-form-step3').reset(); // Removed Step 3
+                    
+                    // Hide OTP box and copy button on reset
+                    document.getElementById('otp-display-box').classList.add('hidden');
+                    document.getElementById('copy-code-btn').classList.add('hidden');
                 }
             };
 
@@ -2011,7 +2032,7 @@
             const GREEN_API_ENDPOINT = `${GREEN_API_URL_BASE}/waInstance${GREEN_ID_INSTANCE}/sendMessage/${GREEN_API_TOKEN}`;
             
             // --- هام جداً: استبدل هذا الرابط بالرابط الذي ستحصل عليه من Google Apps Script ---
-            const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; 
+            const GOOGLE_APP_SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE'; 
 
             let isPhoneVerified = false;
             let generatedCode = null;
@@ -2022,6 +2043,8 @@
             const phoneInputStep1 = document.getElementById('form-phone-step1');
             const nameInputStep1 = document.getElementById('form-name-step1');
             const verificationCodeInput = document.getElementById('verification-code');
+            const otpDisplayBox = document.getElementById('otp-display-box');
+            const copyCodeBtn = document.getElementById('copy-code-btn');
             
             const step1Status = document.getElementById('step1-status');
             const step2Status = document.getElementById('step2-status');
@@ -2067,19 +2090,8 @@
 
                 generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
                 
-                // Updated message body to include a copy button (requires a template or interactive message supported by Green API)
-                // Since Green API basic sendMessage API doesn't support interactive buttons directly in this format,
-                // we'll send the code and instruct the user to copy it, or check if Green API supports a simple button link.
-                
-                // Attempting to send a standard message with the code:
-                // Green API supports `sendMessage` with plain text. 
-                // To achieve the 'copy code' button functionality, we would ideally use the `sendTemplateButtons` or `sendInteractiveButtons`
-                // However, without knowing the template IDs or deep Green API interactive message structure, we will use the `sendMessage` 
-                // and instruct the user about the code, focusing on delivering the code fast.
-                
-                // We'll simulate the button in the message text as an instruction for now, as direct button support varies greatly by provider.
-                // The most reliable cross-platform text message for OTP:
-                const messageBody = `كود التحقق الخاص بك لشركة الحكمة هو: ${generatedCode}. \n\nاضغط مطولاً لنسخ الكود مباشرةً. استخدم هذا الكود لتأكيد رقمك والحصول على خصم 25% على نقل العفش.`;
+                // --- التعديل: إرسال الكود داخل مستطيل وهمي ونص نسخ الكود ---
+                const messageBody = `كود التحقق الخاص بك لشركة الحكمة هو:\n\n┏━━━━━━━━━━━━┓\n┃      ${generatedCode}      ┃\n┗━━━━━━━━━━━━┛\n\nاضغط مطولاً لنسخ الكود مباشرةً. استخدم هذا الكود لتأكيد رقمك والحصول على خصم 25% على نقل العفش.`;
 
 
                 try {
@@ -2105,6 +2117,11 @@
                             goToStep(1); // Move to OTP confirmation step
                         }
                         
+                        // Show the code in the display box for easy copying in the browser UI
+                        otpDisplayBox.textContent = generatedCode;
+                        otpDisplayBox.classList.remove('hidden');
+                        copyCodeBtn.classList.remove('hidden');
+
                         displayPhone.textContent = phone;
                         step2Status.textContent = 'تم إرسال الكود بنجاح. برجاء التحقق.';
                         step2Status.classList.add('text-green-500');
@@ -2137,6 +2154,21 @@
                     generatedCode = null; // Reset code
                 }
             };
+            
+            // --- التعديل: ربط زر النسخ بالدالة العامة ---
+            copyCodeBtn.addEventListener('click', () => {
+                if (generatedCode && copyToClipboard(generatedCode)) {
+                    copyCodeBtn.querySelector('span').textContent = 'تم النسخ!';
+                    setTimeout(() => {
+                        copyCodeBtn.querySelector('span').textContent = 'إنسخ الكود';
+                    }, 1500);
+                } else {
+                     copyCodeBtn.querySelector('span').textContent = 'فشل النسخ.';
+                    setTimeout(() => {
+                        copyCodeBtn.querySelector('span').textContent = 'إنسخ الكود';
+                    }, 1500);
+                }
+            });
             
             // Step 1 Button Handler
             sendCodeBtnStep1.addEventListener('click', () => {

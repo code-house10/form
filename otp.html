@@ -1998,11 +1998,13 @@
                 }
             };
             
-            // ---  WhatsApp Verification & Form Submission Logic ---
+         // ---  WhatsApp Verification & Form Submission Logic ---
 
-          const ULTRAMSG_INSTANCE = 'instance151477';
-            const ULTRAMSG_TOKEN = '8z6q9uusobckj1gj';
-            const ULTRAMSG_API_URL = `https://api.ultramsg.com/${ULTRAMSG_INSTANCE}/messages/chat`;
+// WAPI.Cloud WhatsApp API
+// ضع التوكن الخاص بك بدلاً من YOUR_API_TOKEN
+const WHAPI_TOKEN = '2ei599u8ahni04WDk7fxTKQ5KT8DyGav';
+const WHAPI_API_URL = `https://gate.whapi.cloud/messages/text?token=${WHAPI_TOKEN}`;
+
             
             const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-YVGo-vy6RsZr5rBY_RgxJICgOzRT5ScBPWm7kR4vELwuAUzZiFVYOpgpst8_hLasPA/exec'; 
 
@@ -2208,29 +2210,48 @@
                 generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
                 const messageBody = `كود التحقق الخاص بك لشركة الحكمة هو: ${generatedCode}`;
 
-                try {
-                    const response = await fetch(ULTRAMSG_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            token: ULTRAMSG_TOKEN,
-                            to: formattedPhone,
-                            body: messageBody
-                        })
-                    });
-                    const result = await response.json();
-                    if (result.sent === "true" || (result.status && result.status === "success")) {
-                        verificationContainer.classList.remove('hidden');
-                        phoneInput.disabled = true;
-                        verificationStatus.textContent = 'تم إرسال الكود بنجاح. برجاء التحقق.';
-                        verificationStatus.classList.add('text-green-500');
-                        sendCodeBtn.innerText = 'تم الإرسال';
-                    } else {
-                        throw new Error(result.error || 'Failed to send message');
-                    }
-                } catch (error) {
+                   try {
+        const response = await fetch(WHAPI_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'application/json'
+            },
+            body: JSON.stringify({
+                // Whapi.Cloud يتوقع الرقم بصيغة دولية بدون +
+                // مثال: 2010xxxxxxx
+                to: formattedPhone,
+                body: messageBody,
+                typing_time: 10 // اختياري: يظهر كأن البوت يكتب
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('HTTP status ' + response.status);
+        }
+
+        // لو حابب تقرأ الرد:
+        // const result = await response.json();
+        // console.log('Whapi response', result);
+
+        // نجاح إرسال الكود
+        verificationContainer.classList.remove('hidden');
+        phoneInput.disabled = true; // قفل رقم الموبايل بعد الإرسال
+        verificationStatus.textContent = 'تم إرسال الكود بنجاح. برجاء التحقق.';
+        verificationStatus.classList.add('text-green-500');
+        verificationStatus.classList.remove('text-red-500');
+        sendCodeBtn.innerText = 'تم الإرسال';
+
+    } catch (error) {
+        console.error('Error sending WhatsApp message via Whapi:', error);
+        verificationStatus.textContent = 'فشل إرسال الكود. تأكد من الرقم وحاول مرة أخرى.';
+        verificationStatus.classList.add('text-red-500');
+        verificationStatus.classList.remove('text-green-500');
+        sendCodeBtn.disabled = false;
+        sendCodeBtn.innerText = 'إرسال الكود';
+        generatedCode = null; // إعادة تعيين الكود
+    }
+
                     console.error('Error sending WhatsApp message:', error);
                     verificationStatus.textContent = 'فشل إرسال الكود. تأكد من الرقم وحاول مرة أخرى.';
                     verificationStatus.classList.add('text-red-500');
@@ -2383,6 +2404,7 @@
     </script>
 </body>
 </html>
+
 
 
 
